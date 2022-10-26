@@ -2,8 +2,8 @@
 
 download the dependecies 
 
-yarn 
+project-root/UEE-2022/aquaOrg/frontend/aquaorg> yarn 
 
 To start the project 
 
-yarn start
+project-root/UEE-2022/aquaOrg/frontend/aquaorg> yarn start
