@@ -5,6 +5,10 @@ const Donation = () => {
     return (
         <View>
             <Text>Donation</Text>
+            <Text>Donation Methods</Text>
+            <button>Donation Methods</button>
+            
+
         </View>
     )
 }
