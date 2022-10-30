@@ -39,9 +39,9 @@ const Bottom = createBottomTabNavigator()
 const Stack = createStackNavigator()
 
 const HomeScreens = () => (
-  <Bottom.Navigator screenOptions={{ headerShown: false }} initialRouteName="Home">
+  <Bottom.Navigator screenOptions={{ headerShown: false }} initialRouteName="First_Home">
     <Bottom.Screen name="Profile" component={Profile} />
-    <Bottom.Screen name="Home" component={Home} />
+    <Bottom.Screen name="First_Home" component={Home} />
     <Bottom.Screen name="Settings" component={Settings} />
   </Bottom.Navigator>
 )
@@ -56,7 +56,7 @@ export default function App() {
   })
 
   const [isLoading, setIsLoading] = useState(true)
-  const [userAuth, setUserAuth] = useState(null)
+  const [userAuth, setUserAuth] = useState("123")
 
   const authContext = useMemo(() => {
     return {
@@ -92,7 +92,7 @@ export default function App() {
     <AuthContext.Provider value={authContext}>
       <NavigationContainer theme={theme}>
         {(userAuth) ? (
-          <Drawer.Navigator >
+          <Drawer.Navigator initialRouteName='Info'>
             <Drawer.Screen name='Home' component={HomeScreens} />
             <Drawer.Screen name='Info' component={Info} />
             <Drawer.Screen name='QuestionAndAnswers' component={QuestionAndAnswers} />
