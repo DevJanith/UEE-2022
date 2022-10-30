@@ -24,7 +24,7 @@ const Event = ({ navigation }) => {
   ];
 
   function viewAllEvents() {
-    console.log("sdsdsd");
+    navigation.navigate("AllEvents");
   }
   function addEvent() {
     navigation.navigate("AddEvent");
@@ -58,7 +58,7 @@ const Event = ({ navigation }) => {
               uppercase={false}
               mode="contained"
               style={styles.fab}
-              onPress={() => console.log("Pressed")}
+              onPress={() => viewAllEvents()}
             >
               View More...
             </Button>
@@ -227,6 +227,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   heading: {
+    fontWeight: "bold",
     fontSize: 25,
     padding: 0,
     margin: 10,
@@ -258,43 +259,52 @@ const styles = StyleSheet.create({
 
   menuCard1: {
     backgroundColor: "#53A7DB",
-    flexWrap: "wrap",
+
     margin: 10,
     width: 150,
     height: 110,
     borderBottomRightRadius: 30,
     borderTopEndRadius: 30,
     borderTopStartRadius: 30,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   menuCard2: {
     backgroundColor: "#53A7DB",
-    flexWrap: "wrap",
+
     margin: 10,
     width: 150,
     height: 110,
     borderBottomLeftRadius: 30,
     borderTopEndRadius: 30,
     borderTopStartRadius: 30,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   menuCard3: {
     backgroundColor: "#53A7DB",
-    flexWrap: "wrap",
+
     margin: 10,
     width: 150,
     height: 110,
     borderBottomRightRadius: 30,
     borderTopEndRadius: 30,
-    alignContent: "center",
+    display: "flex",
     justifyContent: "center",
+    alignItems: "center",
   },
   menuCard4: {
     backgroundColor: "#53A7DB",
-    flexWrap: "wrap",
     margin: 10,
     width: 150,
     height: 110,
     borderBottomLeftRadius: 30,
     borderTopStartRadius: 30,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   menuCardHeading: {
     fontSize: 18,

@@ -14,6 +14,7 @@ import ResetPassword from "./screens/auth/ResetPassword";
 import Donation from "./screens/Donation";
 import Event from "./screens/Event";
 import AddEvent from "./screens/events/AddEvent";
+import AllEvents from "./screens/events/AllEvents";
 import Home from "./screens/Home";
 import Info from "./screens/Info";
 import QuestionAndAnswers from "./screens/QuestionAndAnswers";
@@ -47,6 +48,12 @@ const EventScreens = () => (
       name="AddEvent"
       component={AddEvent}
       options={{ title: "Add Event" }}
+    />
+
+    <StackEvent.Screen
+      name="AllEvents"
+      component={AllEvents}
+      options={{ title: "All Events" }}
     />
   </StackEvent.Navigator>
 );

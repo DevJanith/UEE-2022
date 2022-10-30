@@ -4,10 +4,11 @@ import {
   StyleSheet,
   Platform,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { TextInput, Button } from "react-native-paper";
+import { TextInput, Button, FAB, IconButton, Chip } from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 const AddEvent = ({ navigation }) => {
@@ -15,6 +16,9 @@ const AddEvent = ({ navigation }) => {
   const [oraganizer, setOrganizer] = useState();
   const [description, setDescription] = useState();
   const [eventDate, setEventDate] = useState();
+  const [tags, setTags] = useState([]);
+
+  const [tag, setTag] = useState();
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
@@ -44,98 +48,155 @@ const AddEvent = ({ navigation }) => {
     setShow(true);
     setMode(currentMode);
   };
+  function addToTags() {
+    let existingTags = tags;
+
+    existingTags.push(tag);
+    setTags(existingTags);
+    console.log(existingTags);
+  }
   return (
     <SafeAreaView>
-      <View style={styles.formContainer}>
-        <TextInput
-          label="Enter Event Name"
-          style={styles.inputField}
-          value={eventName}
-          onChangeText={(text) => setEventName(text)}
-        />
-        <TextInput
-          label="Enter Organizer Name"
-          value={oraganizer}
-          style={styles.inputField}
-          onChangeText={(text) => setOrganizer(text)}
-        />
-      </View>
-
-      <View style={styles.inputContainer}>
-        <Text style={styles.textField}>Select Date and Time</Text>
-
-        <View
-          style={{
-            marginRight: 10,
-          }}
-        >
-          <Button
-            uppercase={false}
-            style={styles.dateBtn}
-            mode="contained"
-            color="#53A7DB"
-            onPress={() => {
-              showMode("date");
-            }}
-          >
-            Date
-          </Button>
-        </View>
-
-        <View
-          style={{
-            marginRight: 10,
-          }}
-        >
-          <Button
-            uppercase={false}
-            style={styles.dateBtn}
-            mode="contained"
-            color="#53A7DB"
-            onPress={() => {
-              showMode("time");
-            }}
-          >
-            Time
-          </Button>
-        </View>
-
-        {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode={mode}
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
+      <ScrollView>
+        <View style={styles.formContainer}>
+          <TextInput
+            mode="outlined"
+            activeOutlineColor="#015C92"
+            label="Enter Event Name"
+            style={styles.inputField}
+            value={eventName}
+            onChangeText={(text) => setEventName(text)}
           />
-        )}
-      </View>
+          <TextInput
+            mode="outlined"
+            label="Enter Organizer Name"
+            activeOutlineColor="#015C92"
+            value={oraganizer}
+            style={styles.inputField}
+            onChangeText={(text) => setOrganizer(text)}
+          />
+        </View>
 
-      <TextInput
-        label="Event Date and Time"
-        value={eventDate}
-        style={styles.inputField}
-        onChangeText={(text) => setEventDate(text)}
-      />
+        <View style={styles.inputContainer}>
+          <Text style={styles.textField}>Select Date and Time</Text>
 
-      <TextInput
-        multiline={true}
-        label="Enter Description about Event... "
-        style={styles.inputField}
-        value={description}
-        onChangeText={(text) => setDescription(text)}
-      />
+          <View
+            style={{
+              marginRight: 10,
+            }}
+          >
+            <Button
+              uppercase={false}
+              style={styles.dateBtn}
+              mode="contained"
+              color="#53A7DB"
+              onPress={() => {
+                showMode("date");
+              }}
+            >
+              Date
+            </Button>
+          </View>
 
-      <Button
-        style={styles.submitButton}
-        uppercase={false}
-        mode="contained"
-        onPress={() => console.log("Submit")}
-        color="#015C92"
-      >
-        Submit Event
-      </Button>
+          <View
+            style={{
+              marginRight: 10,
+            }}
+          >
+            <Button
+              uppercase={false}
+              style={styles.dateBtn}
+              mode="contained"
+              color="#53A7DB"
+              onPress={() => {
+                showMode("time");
+              }}
+            >
+              Time
+            </Button>
+          </View>
+
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              onChange={onChange}
+            />
+          )}
+        </View>
+
+        <TextInput
+          mode="outlined"
+          label="Event Date and Time"
+          activeOutlineColor="#015C92"
+          value={eventDate}
+          style={styles.inputField}
+          onChangeText={(text) => setEventDate(text)}
+        />
+
+        <TextInput
+          mode="outlined"
+          multiline={true}
+          activeOutlineColor="#015C92"
+          label="Enter Description about Event... "
+          style={styles.inputField}
+          value={description}
+          onChangeText={(text) => setDescription(text)}
+        />
+        <View
+          style={{
+            flexDirection: "row",
+            marginBottom: 10,
+          }}
+        >
+          <TextInput
+            mode="outlined"
+            activeOutlineColor="#015C92"
+            label="Add Tags"
+            style={[styles.inputField, styles.inputFieldsmall]}
+            value={tag}
+            onChangeText={(text) => setTag(text)}
+          />
+          <IconButton
+            style={{
+              marginTop: 8,
+            }}
+            icon="plus"
+            size={40}
+            color="#53A7DB"
+            onPress={() => addToTags()}
+          />
+        </View>
+        <View style={{ flexDirection: "row", marginTop: 2, marginBottom: 10 }}>
+          {tags.map((item, key) => (
+            <Chip
+              // icon="information"
+              textStyle={{
+                fontWeight: "800",
+              }}
+              style={styles.chip}
+              mode="flat"
+              selectedColor="#443F3F"
+              key={key}
+            >
+              {item}
+            </Chip>
+          ))}
+        </View>
+
+        <Button
+          style={styles.submitButton}
+          uppercase={false}
+          mode="contained"
+          onPress={() => console.log("Submit")}
+          color="#015C92"
+        >
+          Submit Event
+        </Button>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -149,6 +210,9 @@ const styles = StyleSheet.create({
 
   inputField: {
     marginVertical: 10,
+  },
+  inputFieldsmall: {
+    minWidth: 200,
   },
   inputContainer: {
     flexDirection: "row",
@@ -168,5 +232,12 @@ const styles = StyleSheet.create({
   },
   dateBtn: {
     width: 100,
+  },
+  addTagsBtn: {
+    backgroundColor: "",
+  },
+  chip: {
+    backgroundColor: "#53A7DB",
+    marginRight: 10,
   },
 });
