@@ -137,45 +137,37 @@ const Event = ({ navigation }) => {
             justifyContent: "center",
           }}
         >
-          <Card
-            style={styles.menuCard1}
-            elevation={5}
-            onPress={() => {
-              viewAllEvents();
-            }}
-          >
+          {/* <Card>
             <Card.Content
               style={{
                 flexDirection: "column",
                 justifyContent: "center",
               }}
             >
-              <Text style={styles.menuCardHeading}>All Events</Text>
-              {/* <Avatar.Icon size={24} icon="folder" /> */}
+              <Avatar.Icon size={24} icon="folder" />
             </Card.Content>
-          </Card>
-          <Card
+          </Card> */}
+
+          <TouchableOpacity
+            style={styles.menuCard1}
+            elevation={5}
+            onPress={() => {
+              viewAllEvents();
+            }}
+          >
+            <Text style={styles.menuCardHeading}>All Events</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
             style={styles.menuCard2}
             elevation={5}
             onPress={() => {
               viewYourEvents();
             }}
           >
-            <Card.Content>
-              <Text style={styles.menuCardHeading}>View Your Events</Text>
-            </Card.Content>
-          </Card>
-          {/* <Card
-            style={styles.menuCard3}
-            elevation={5}
-            onPress={() => {
-              addEvent();
-            }}
-          >
-            <Card.Content>
-              <Text style={styles.menuCardHeading}>Add Event</Text>
-            </Card.Content>
-          </Card> */}
+            <Text style={styles.menuCardHeading}>View Your Events</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity
             style={styles.menuCard3}
             onPress={() => {
@@ -184,17 +176,16 @@ const Event = ({ navigation }) => {
           >
             <Text style={styles.menuCardHeading}>Add Event</Text>
           </TouchableOpacity>
-          <Card
+
+          <TouchableOpacity
             style={styles.menuCard4}
             elevation={5}
             onPress={() => {
               interestedEvents();
             }}
           >
-            <Card.Content>
-              <Text style={styles.menuCardHeading}>Interested Events</Text>
-            </Card.Content>
-          </Card>
+            <Text style={styles.menuCardHeading}>Interested Events</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
