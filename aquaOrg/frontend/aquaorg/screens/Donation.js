@@ -7,7 +7,7 @@ const Donation = () => {
             <Text>Donation</Text>
             <Text>Donation Methods</Text>
             <button>Donation Methods</button>
-            
+            <image>Recurring Donation</image>
 
         </View>
     )
