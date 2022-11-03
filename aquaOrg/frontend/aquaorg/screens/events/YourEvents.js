@@ -23,50 +23,19 @@ const AllEvents = () => {
 
   const getEventsData = () => {
     setLoading(true);
-    axios
-      .get(baseURL + "/aqua-org/events/")
-      .then((response) => {
-        setEvents(response.data.data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
-  };
-
-  const addToInterestedList = (item) => {
-    console.log(item);
-
-    // get this user id from login
     let userID = 1;
-    const data = {
-      user: userID,
-      name: item.name,
-      oraganizer: item.organizer,
-      date: item.date,
-      description: item.description,
-      tags: item.tags,
-    };
-
-    console.log(data);
     axios
-      .post(baseURL + "/aqua-org/interested", data)
+      .get(baseURL + "/aqua-org/events/user/" + userID)
       .then((response) => {
-        if (response.status == 200) {
-          setVisible(true);
-          setSnackbarMessage("Added to Interested List.");
-        } else {
-          setVisible(true);
-          setSnackbarMessage("Failed to add Event.");
-        }
+        setEvents(response.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
-        setVisible(true);
-        setSnackbarMessage("Something went wrong!");
+        setLoading(false);
       });
   };
+
   const onDismissSnackBar = () => setVisible(false);
 
   useEffect(() => {
@@ -120,10 +89,11 @@ const AllEvents = () => {
                       <Title style={{ fontWeight: "bold" }}>{item.name}</Title>
 
                       <FAB
-                        icon="plus"
+                        icon="pen"
+                        color="white"
                         small
                         style={styles.fab}
-                        onPress={() => addToInterestedList(item)}
+                        onPress={() => editEvent(item)}
                       />
                     </View>
                     <View
@@ -232,6 +202,6 @@ const styles = StyleSheet.create({
   },
 
   fab: {
-    backgroundColor: "#77BF5E",
+    backgroundColor: "#ff8407",
   },
 });

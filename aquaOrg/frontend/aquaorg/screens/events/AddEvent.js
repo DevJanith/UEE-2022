@@ -8,8 +8,17 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { TextInput, Button, FAB, IconButton, Chip } from "react-native-paper";
+import {
+  TextInput,
+  Button,
+  FAB,
+  IconButton,
+  Chip,
+  Snackbar,
+} from "react-native-paper";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import axios from "axios";
+import baseURL from "../../store";
 
 const AddEvent = ({ navigation }) => {
   const [eventName, setEventName] = useState();
@@ -17,6 +26,7 @@ const AddEvent = ({ navigation }) => {
   const [description, setDescription] = useState();
   const [eventDate, setEventDate] = useState();
   const [tags, setTags] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const [tag, setTag] = useState();
 
@@ -24,6 +34,8 @@ const AddEvent = ({ navigation }) => {
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
   const [text, setText] = useState("Empty");
+  const [visible, setVisible] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -55,6 +67,41 @@ const AddEvent = ({ navigation }) => {
     setTags(existingTags);
     console.log(existingTags);
   }
+  const onDismissSnackBar = () => setVisible(false);
+
+  const SubmitEvent = () => {
+    setLoading(true);
+    // get this user id from login
+    let userID = 1;
+    const data = {
+      user: userID,
+      name: eventName,
+      oraganizer: oraganizer,
+      date: eventDate,
+      description: description,
+      tags: tags,
+    };
+
+    console.log(data);
+    axios
+      .post(baseURL + "/aqua-org/events", data)
+      .then((response) => {
+        setLoading(false);
+        if (response.status == 200) {
+          setVisible(true);
+          setSnackbarMessage("Event Added Succsesfully!");
+        } else {
+          setVisible(true);
+          setSnackbarMessage("Failed to add Event.");
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+        setVisible(true);
+        setSnackbarMessage("Something went wrong!");
+      });
+  };
   return (
     <SafeAreaView>
       <ScrollView>
@@ -134,6 +181,7 @@ const AddEvent = ({ navigation }) => {
           activeOutlineColor="#015C92"
           value={eventDate}
           style={styles.inputField}
+          disabled={true}
           onChangeText={(text) => setEventDate(text)}
         />
 
@@ -191,11 +239,25 @@ const AddEvent = ({ navigation }) => {
           style={styles.submitButton}
           uppercase={false}
           mode="contained"
-          onPress={() => console.log("Submit")}
+          onPress={() => SubmitEvent()}
           color="#015C92"
+          loading={loading}
+          disabled={loading}
         >
           Submit Event
         </Button>
+        <Snackbar
+          visible={visible}
+          onDismiss={onDismissSnackBar}
+          action={{
+            label: "Dismiss",
+            onPress: () => {
+              setVisible(false);
+            },
+          }}
+        >
+          {snackbarMessage}
+        </Snackbar>
       </ScrollView>
     </SafeAreaView>
   );

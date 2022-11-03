@@ -15,6 +15,8 @@ import Donation from "./screens/Donation";
 import Event from "./screens/Event";
 import AddEvent from "./screens/events/AddEvent";
 import AllEvents from "./screens/events/AllEvents";
+import YourEvents from "./screens/events/YourEvents";
+import InterestedEvents from "./screens/events/InterestedEvents";
 import Home from "./screens/Home";
 import Info from "./screens/Info";
 import QuestionAndAnswers from "./screens/QuestionAndAnswers";
@@ -55,6 +57,16 @@ const EventScreens = () => (
       component={AllEvents}
       options={{ title: "All Events" }}
     />
+    <StackEvent.Screen
+      name="YourEvents"
+      component={YourEvents}
+      options={{ title: "Your Events" }}
+    />
+    <StackEvent.Screen
+      name="InterestedEvents"
+      component={InterestedEvents}
+      options={{ title: "Interested Events" }}
+    />
   </StackEvent.Navigator>
 );
 
@@ -78,7 +90,13 @@ export default function App() {
               const routeName =
                 getFocusedRouteNameFromRoute(route) ?? "EventSc";
               if (typeof routeName == "undefined") return;
-              if (routeName == "AddEvent") return { headerShown: false };
+              if (
+                routeName == "AddEvent" ||
+                routeName == "AllEvents" ||
+                routeName == "YourEvents" ||
+                routeName == "InterestedEvents"
+              )
+                return { headerShown: false };
             }}
           />
           <Drawer.Screen name="Donation" component={Donation} />

@@ -30,10 +30,10 @@ const Event = ({ navigation }) => {
     navigation.navigate("AddEvent");
   }
   function viewYourEvents() {
-    console.log("sdsdsd");
+    navigation.navigate("YourEvents");
   }
   function interestedEvents() {
-    console.log("sdsdsd");
+    navigation.navigate("InterestedEvents");
   }
 
   useEffect(() => {
