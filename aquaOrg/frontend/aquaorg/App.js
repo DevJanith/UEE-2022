@@ -56,7 +56,7 @@ export default function App() {
   })
 
   const [isLoading, setIsLoading] = useState(true)
-  const [userAuth, setUserAuth] = useState("123")
+  const [userAuth, setUserAuth] = useState(null)
 
   const authContext = useMemo(() => {
     return {
@@ -92,16 +92,16 @@ export default function App() {
     <AuthContext.Provider value={authContext}>
       <NavigationContainer theme={theme}>
         {(userAuth) ? (
-          <Drawer.Navigator initialRouteName='Info'>
+          <Drawer.Navigator initialRouteName='Home'>
             <Drawer.Screen name='Home' component={HomeScreens} />
             <Drawer.Screen name='Info' component={Info} />
-            <Drawer.Screen name='QuestionAndAnswers' component={QuestionAndAnswers} />
+            <Drawer.Screen name='QuestionAndAnswers' component={QuestionAndAnswers} options={{ title: "Question & Answers" }} />
             <Drawer.Screen name='Event' component={Event} />
             <Drawer.Screen name='Donation' component={Donation} />
           </Drawer.Navigator>
         )
           : (
-            <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Page1">
+            <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Registration" component={Registration} />
               <Stack.Screen name="ResetPassword" component={ResetPassword} />
