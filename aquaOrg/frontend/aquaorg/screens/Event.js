@@ -5,23 +5,34 @@ import {
   Image,
   SafeAreaView,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { FlatList, TextInput } from "react-native-gesture-handler";
 import { Avatar, Button, Card, Title, Paragraph } from "react-native-paper";
 import { BackgroundContainer } from "../components";
+import axios from "axios";
+import baseURL from "../store";
 
 const Event = ({ navigation }) => {
   const [topEvents, setTopEvents] = useState();
 
-  const data = [
-    { _id: 1, name: "Beach Cleaning", date: "2022-10-01" },
-    { _id: 2, name: "Beach Cleaning", date: "2022-10-01" },
-    { _id: 3, name: "Beach Cleaning", date: "2022-10-01" },
-    { _id: 4, name: "Beach Cleaning", date: "2022-10-01" },
-    { _id: 5, name: "Beach Cleaning", date: "2022-10-01" },
-    { _id: 6, name: "Beach Cleaning", date: "2022-10-01" },
-  ];
+  const data = [];
+
+  const getEventsData = () => {
+    axios
+      .get(baseURL + "/aqua-org/events/")
+      .then((response) => {
+        setTopEvents(response.data.data.slice(0, 5));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    getEventsData();
+  }, []);
 
   function viewAllEvents() {
     navigation.navigate("AllEvents");
@@ -30,7 +41,7 @@ const Event = ({ navigation }) => {
     navigation.navigate("AddEvent");
   }
   function viewYourEvents() {
-    navigation.navigate("YourEvents");
+    navigation.navigate("YourEvents", { reloadVal: true });
   }
   function interestedEvents() {
     navigation.navigate("InterestedEvents");
@@ -54,17 +65,32 @@ const Event = ({ navigation }) => {
         <View style={{ flex: 2 }}>
           <View style={styles.titleContainer}>
             <Text style={styles.heading}>Top Events</Text>
-            <Button
+            {/* <Button
               uppercase={false}
               mode="contained"
               style={styles.fab}
               onPress={() => viewAllEvents()}
+            ></Button> */}
+
+            <TouchableOpacity
+              style={styles.fab}
+              onPress={() => viewAllEvents()}
             >
-              View More...
-            </Button>
+              <Text
+                style={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: 15,
+                  marginLeft: 3,
+                }}
+              >
+                View More...
+              </Text>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.topEventsContainer}>
+            <View></View>
             <FlatList
               keyExtractor={(key) => {
                 return key._id;
@@ -78,10 +104,22 @@ const Event = ({ navigation }) => {
                     elevation={5}
                     style={styles.eventCard}
                     mode={"elevated"}
+                    onPress={() => {
+                      navigation.navigate("ViewEvent", { item });
+                    }}
                   >
                     <Card.Content>
                       <Title>{item.name}</Title>
-                      <Paragraph>On : {item.date}</Paragraph>
+                      <Paragraph>
+                        <Text
+                          style={{
+                            fontWeight: "bold",
+                          }}
+                        >
+                          On :{" "}
+                        </Text>
+                        {item.date}
+                      </Paragraph>
                     </Card.Content>
                   </Card>
                 );
@@ -137,17 +175,6 @@ const Event = ({ navigation }) => {
             justifyContent: "center",
           }}
         >
-          {/* <Card>
-            <Card.Content
-              style={{
-                flexDirection: "column",
-                justifyContent: "center",
-              }}
-            >
-              <Avatar.Icon size={24} icon="folder" />
-            </Card.Content>
-          </Card> */}
-
           <TouchableOpacity
             style={styles.menuCard1}
             elevation={5}
@@ -236,6 +263,7 @@ const styles = StyleSheet.create({
 
   eventCard: {
     height: 100,
+    width: 170,
     margin: 10,
     backgroundColor: "#BCE6FF",
     borderRadius: 20,
@@ -251,9 +279,11 @@ const styles = StyleSheet.create({
   },
 
   fab: {
-    height: 40,
+    height: 30,
+    width: 100,
     borderRadius: 20,
-    top: 5,
+    padding: 4,
+    top: 20,
     backgroundColor: "#015C92",
   },
 

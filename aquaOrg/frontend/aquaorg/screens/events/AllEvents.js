@@ -14,7 +14,7 @@ import { FlatList } from "react-native-gesture-handler";
 import axios from "axios";
 import baseURL from "../../store";
 
-const AllEvents = () => {
+const AllEvents = ({ navigation }) => {
   const [events, setEvents] = useState();
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -107,7 +107,7 @@ const AllEvents = () => {
                   style={styles.eventCard}
                   mode={"elevated"}
                   onPress={() => {
-                    console.log("View Event");
+                    navigation.navigate("ViewEvent", { item });
                   }}
                 >
                   <Card.Content>
@@ -198,6 +198,7 @@ const AllEvents = () => {
           />
           <Snackbar
             visible={visible}
+            style={styles.snackbar}
             onDismiss={onDismissSnackBar}
             action={{
               label: "Dismiss",
@@ -233,5 +234,9 @@ const styles = StyleSheet.create({
 
   fab: {
     backgroundColor: "#77BF5E",
+  },
+  snackbar: {
+    flex: 1,
+    justifyContent: "flex-end",
   },
 });

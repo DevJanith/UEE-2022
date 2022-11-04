@@ -14,7 +14,8 @@ import { FlatList } from "react-native-gesture-handler";
 import axios from "axios";
 import baseURL from "../../store";
 
-const AllEvents = () => {
+const YourEvents = ({ route, navigation }) => {
+  let { reloadVal } = route.params;
   const [events, setEvents] = useState();
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -41,7 +42,7 @@ const AllEvents = () => {
   useEffect(() => {
     getEventsData();
     setEvents(data);
-  }, []);
+  }, [reloadVal]);
 
   return (
     <SafeAreaView>
@@ -76,7 +77,7 @@ const AllEvents = () => {
                   style={styles.eventCard}
                   mode={"elevated"}
                   onPress={() => {
-                    console.log("View Event");
+                    navigation.navigate("ViewEventUser", { item });
                   }}
                 >
                   <Card.Content>
@@ -184,7 +185,7 @@ const AllEvents = () => {
   );
 };
 
-export default AllEvents;
+export default YourEvents;
 
 const styles = StyleSheet.create({
   listContainer: {
