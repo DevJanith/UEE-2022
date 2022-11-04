@@ -1,7 +1,11 @@
 import "react-native-gesture-handler";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import {
+  DefaultTheme,
+  NavigationContainer,
+  getFocusedRouteNameFromRoute,
+} from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useFonts } from "expo-font";
 import { useEffect, useMemo, useState } from "react";
