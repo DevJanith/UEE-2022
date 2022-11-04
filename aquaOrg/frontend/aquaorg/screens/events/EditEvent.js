@@ -20,7 +20,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import axios from "axios";
 import baseURL from "../../store";
 
-const AddEvent = ({ navigation }) => {
+const EditEvent = ({ navigation }) => {
   const [eventName, setEventName] = useState();
   const [oraganizer, setOrganizer] = useState();
   const [description, setDescription] = useState();
@@ -61,15 +61,11 @@ const AddEvent = ({ navigation }) => {
     setMode(currentMode);
   };
   function addToTags() {
-    if (tag) {
-      let existingTags = tags;
+    let existingTags = tags;
 
-      setTag("");
-
-      existingTags.push(tag);
-      setTags(existingTags);
-      console.log(existingTags);
-    }
+    existingTags.push(tag);
+    setTags(existingTags);
+    console.log(existingTags);
   }
   const onDismissSnackBar = () => setVisible(false);
 
@@ -145,7 +141,7 @@ const AddEvent = ({ navigation }) => {
                 showMode("date");
               }}
             >
-              <Text style={{ color: "white" }}> Date</Text>
+              Date
             </Button>
           </View>
 
@@ -163,7 +159,7 @@ const AddEvent = ({ navigation }) => {
                 showMode("time");
               }}
             >
-              <Text style={{ color: "white" }}> Time</Text>
+              Time
             </Button>
           </View>
 
@@ -220,7 +216,7 @@ const AddEvent = ({ navigation }) => {
             size={40}
             color="#53A7DB"
             onPress={() => addToTags()}
-          ></IconButton>
+          />
         </View>
         <View style={{ flexDirection: "row", marginTop: 2, marginBottom: 10 }}>
           {tags.map((item, key) => (
@@ -267,7 +263,7 @@ const AddEvent = ({ navigation }) => {
   );
 };
 
-export default AddEvent;
+export default EditEvent;
 
 const styles = StyleSheet.create({
   formContainer: {

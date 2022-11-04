@@ -19,6 +19,7 @@ import YourEvents from "./screens/events/YourEvents";
 import InterestedEvents from "./screens/events/InterestedEvents";
 import ViewEvent from "./screens/events/ViewEvent";
 import ViewEventUser from "./screens/events/ViewEventUser";
+import EditEvent from "./screens/events/EditEvent";
 import Home from "./screens/Home";
 import Info from "./screens/Info";
 import QuestionAndAnswers from "./screens/QuestionAndAnswers";
@@ -79,6 +80,11 @@ const EventScreens = () => (
       component={ViewEventUser}
       options={{ title: "Event" }}
     />
+    <StackEvent.Screen
+      name="EditEvent"
+      component={EditEvent}
+      options={{ title: "Event" }}
+    />
   </StackEvent.Navigator>
 );
 
@@ -108,7 +114,8 @@ export default function App() {
                 routeName == "YourEvents" ||
                 routeName == "InterestedEvents" ||
                 routeName == "ViewEvent" ||
-                routeName == "ViewEventUser"
+                routeName == "ViewEventUser" ||
+                routeName == "EditEvent"
               )
                 return { headerShown: false };
             }}
