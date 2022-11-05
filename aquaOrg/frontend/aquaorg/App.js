@@ -107,6 +107,12 @@ const EventScreens = () => (
   </StackEvent.Navigator>
 );
 
+const QuestionAnswerScreens = () => (
+<Stack.Navigator>
+  {/* <Stack.Screen name=""/>  */}
+</Stack.Navigator>
+)
+
 export default function App() {
   const [loaded] = useFonts({
     InterBold: require("./assets/fonts/Inter-Bold.ttf"),
