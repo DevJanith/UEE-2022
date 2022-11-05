@@ -29,7 +29,7 @@ const ResetPassword = ({ navigation }) => {
                                 Reset Password
                             </Text>
                             <View style={{
-                                marginTop: 60,
+                                marginTop: 20,
                                 marginBottom: SIZES.large,
                                 marginRight: SIZES.extraLarge,
                             }}>
@@ -92,7 +92,7 @@ const ResetPassword = ({ navigation }) => {
                             </View>
                             <View
                                 style={{
-                                    marginTop: SIZES.large,
+                                    marginTop: SIZES.extraLarge,
                                     alignItems: "center",
                                     marginBottom: SIZES.extraLarge
                                 }}

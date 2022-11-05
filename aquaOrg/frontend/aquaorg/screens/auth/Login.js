@@ -23,8 +23,8 @@ const Login = ({ navigation }) => {
                                 fontFamily: FONTS.bold,
                                 fontSize: 60,
                                 color: COLORS.white,
-                                marginTop: 250,
-                                marginBottom: 50,
+                                marginTop: 150,
+                                marginBottom: 30,
                                 textAlign: "center"
                             }}>
                                 Login
@@ -120,6 +120,7 @@ const Login = ({ navigation }) => {
                                             fontSize: SIZES.medium,
                                             color: COLORS.primary,
                                             textAlign: "left",
+                                            cursor: "pointer"
                                         }}
                                         onPress={() => { navigation.push("ResetPassword") }}
                                     > Click Here</Text>
@@ -192,7 +193,7 @@ const Login = ({ navigation }) => {
                                 resizeMode="cover"
                                 style={{
                                     width: "100%",
-                                    height: 400,
+                                    height: 300,
                                     borderBottomLeftRadius: SIZES.medium,
                                     borderBottomRightRadius: SIZES.medium,
                                 }}

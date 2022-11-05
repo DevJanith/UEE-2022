@@ -22,8 +22,8 @@ const Registration = ({ navigation }) => {
                             <Text style={{
                                 fontFamily: FONTS.bold,
                                 fontSize: 60, 
-                                marginTop: 250,
-                                marginBottom: 50,
+                                marginTop: 150,
+                                marginBottom: 20,
                                 textAlign: "center"
                             }}>
                                 Register
@@ -269,7 +269,7 @@ const Registration = ({ navigation }) => {
                                 resizeMode="cover"
                                 style={{
                                     width: "100%",
-                                    height: 400,
+                                    height: 300,
                                     borderBottomLeftRadius: SIZES.medium,
                                     borderBottomRightRadius: SIZES.medium,
                                 }}

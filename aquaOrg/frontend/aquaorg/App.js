@@ -35,6 +35,9 @@ import InterestedEvents from "./screens/events/InterestedEvents";
 import ViewEvent from "./screens/events/ViewEvent";
 import ViewEventUser from "./screens/events/ViewEventUser";
 import EditEvent from "./screens/events/EditEvent";
+import { QuickAnswer, QuickQAHome, QuickQuestion } from "./screens/questionAndAnswers/quickQA";
+import { Previous, PreviousQAHome } from "./screens/questionAndAnswers/previousQA";
+import { ScoreBoard, ScoreBoardQAHome } from "./screens/questionAndAnswers/scoreBoardQA";
 
 //internal styling
 const theme = {
@@ -107,6 +110,19 @@ const EventScreens = () => (
   </StackEvent.Navigator>
 );
 
+const QuestionAnswerScreens = () => (
+  <Stack.Navigator initialRouteName="QuestionAndAnswersSrc">
+    <StackEvent.Screen name="QuestionAndAnswersSrc" component={QuestionAndAnswers} options={{ headerShown: false }} />
+    <Stack.Screen name="QuickQAHome" component={QuickQAHome} options={{ title: "Quick Q & A" }} />
+    <Stack.Screen name="QuickQuestion" component={QuickQuestion} options={{ title: "Quick Question" }} />
+    <Stack.Screen name="QuickAnswer" component={QuickAnswer} options={{ title: "Quick Answer" }} />
+    <Stack.Screen name="PreviousQAHome" component={PreviousQAHome} options={{ title: "Previous Q & A" }} />
+    <Stack.Screen name="Previous" component={Previous} options={{ title: "Previous" }} />
+    <Stack.Screen name="ScoreBoardQAHome" component={ScoreBoardQAHome} options={{ title: "Scoreboard Q & A" }} />
+    <Stack.Screen name="ScoreBoard" component={ScoreBoard} options={{ title: "Scoreboard" }} />
+  </Stack.Navigator>
+)
+
 export default function App() {
   const [loaded] = useFonts({
     InterBold: require("./assets/fonts/Inter-Bold.ttf"),
@@ -157,8 +173,23 @@ export default function App() {
             <Drawer.Screen name="Info" component={Info} />
             <Drawer.Screen
               name="QuestionAndAnswers"
-              component={QuestionAndAnswers}
-              options={{ title: "Question & Answers" }}
+              component={QuestionAnswerScreens}
+              options={({ route }) => {
+                // console.log(getFocusedRouteNameFromRoute(route));
+                const routeName =
+                  getFocusedRouteNameFromRoute(route) ?? "QuestionAndAnswersSrc";
+                if (typeof routeName == "undefined") return;
+                if (
+                  routeName == "QuickQAHome" ||
+                  routeName == "PreviousQAHome" ||
+                  routeName == "ScoreBoardQAHome" ||
+                  routeName == "QuickQuestion" ||
+                  routeName == "QuickAnswer" ||
+                  routeName == "Previous" ||
+                  routeName == "ScoreBoard" 
+                ) return { headerShown: false }
+                return { title: "Question &  ANswers" }
+              }}
             />
             <Drawer.Screen
               name="Event"
