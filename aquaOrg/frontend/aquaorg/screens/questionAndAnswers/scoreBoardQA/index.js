@@ -1,7 +1,7 @@
-import Home from "../previousQA/Home";
+import ScoreBoardQAHome from "./ScoreBoardQAHome";
 import ScoreBoard from "./ScoreBoard";
 
-export{
-    Home,
+export{ 
+    ScoreBoardQAHome,
     ScoreBoard
 }

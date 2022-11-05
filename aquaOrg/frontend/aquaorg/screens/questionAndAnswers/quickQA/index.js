@@ -1,9 +1,9 @@
-import Home from "./Home";
 import QuickAnswer from "./QuickAnswer";
 import QuickQuestion from "./QuickQuestion";
+import QuickQAHome from "./QuickQAHome";
 
-export {
-    Home,
+export { 
     QuickAnswer,
-    QuickQuestion
+    QuickQuestion,
+    QuickQAHome
 }

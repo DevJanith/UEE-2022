@@ -1,7 +1,7 @@
-import Home from "./Home";
+import PreviousQAHome from "./PreviousQAHome";
 import Previous from "./Previous";
 
-export {
-    Home,
+export { 
+    PreviousQAHome,
     Previous
 }
