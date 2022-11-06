@@ -8,6 +8,10 @@ import user from "../assets/icons/user.png";
 import password from "../assets/icons/password.png";
 import contact from "../assets/icons/contact.png";
 import email from "../assets/icons/email.png";
+import add from "../assets/icons/add.png";
+import like from "../assets/icons/like.png";
+import list from "../assets/icons/list.png";
+import your_list from "../assets/icons/your_list.png";
 
 import logo from "../assets/images/logo.png";
 import nft01 from "../assets/images/nft01.png";
@@ -39,6 +43,10 @@ export default {
   password,
   contact,
   email,
+  add,
+  like,
+  list,
+  your_list,
 
   logo,
   nft01,
@@ -57,5 +65,5 @@ export default {
   b1,
   b2,
   b3,
-  b4
+  b4,
 };

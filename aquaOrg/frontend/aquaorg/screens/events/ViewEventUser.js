@@ -32,6 +32,10 @@ const ViewEventUser = ({ route, navigation }) => {
   const onDismissSnackBar = () => setVisible(false);
   const hideDialog = () => setShowDialog(false);
 
+  const editEvent = (item) => {
+    navigation.navigate("EditEvent", { item });
+  };
+
   const deleteEvent = () => {
     console.log(item);
 

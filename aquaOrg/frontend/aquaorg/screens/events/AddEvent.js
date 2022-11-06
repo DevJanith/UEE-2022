@@ -80,7 +80,7 @@ const AddEvent = ({ navigation }) => {
     const data = {
       user: userID,
       name: eventName,
-      oraganizer: oraganizer,
+      organizer: oraganizer,
       date: eventDate,
       description: description,
       tags: tags,
@@ -94,6 +94,7 @@ const AddEvent = ({ navigation }) => {
         if (response.status == 200) {
           setVisible(true);
           setSnackbarMessage("Event Added Succsesfully!");
+          navigation.navigate("YourEvents", { reloadVal: true });
         } else {
           setVisible(true);
           setSnackbarMessage("Failed to add Event.");
@@ -239,17 +240,12 @@ const AddEvent = ({ navigation }) => {
           ))}
         </View>
 
-        <Button
+        <TouchableOpacity
           style={styles.submitButton}
-          uppercase={false}
-          mode="contained"
           onPress={() => SubmitEvent()}
-          color="#015C92"
-          loading={loading}
-          disabled={loading}
         >
-          Submit Event
-        </Button>
+          <Text style={styles.btnText}> Submit Event</Text>
+        </TouchableOpacity>
         <Snackbar
           visible={visible}
           onDismiss={onDismissSnackBar}
@@ -290,12 +286,16 @@ const styles = StyleSheet.create({
     marginLeft: 3,
   },
   submitButton: {
+    backgroundColor: "#015C92",
+    marginTop: 10,
+    marginBottom: 30,
     alignSelf: "center",
-    fontSize: 20,
-    fontWeight: "500",
+    textAlign: "center",
     borderRadius: 30,
     width: 300,
+    height: 50,
   },
+
   dateBtn: {
     width: 100,
   },
@@ -305,5 +305,12 @@ const styles = StyleSheet.create({
   chip: {
     backgroundColor: "#53A7DB",
     marginRight: 10,
+  },
+  btnText: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "700",
+    color: "white",
+    marginTop: 7,
   },
 });

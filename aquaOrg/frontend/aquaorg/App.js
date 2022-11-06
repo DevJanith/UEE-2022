@@ -102,7 +102,7 @@ const EventScreens = () => (
     <StackEvent.Screen
       name="EditEvent"
       component={EditEvent}
-      options={{ title: "Event" }}
+      options={{ title: "Edit Event" }}
     />
   </StackEvent.Navigator>
 );
@@ -161,7 +161,7 @@ export default function App() {
               options={{ title: "Question & Answers" }}
             />
             <Drawer.Screen
-              name="Event"
+              name="Events"
               component={EventScreens}
               options={({ route }) => {
                 // console.log("test", getFocusedRouteNameFromRoute(route));

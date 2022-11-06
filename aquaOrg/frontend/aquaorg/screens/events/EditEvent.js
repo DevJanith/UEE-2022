@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   TextInput,
@@ -20,7 +20,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import axios from "axios";
 import baseURL from "../../store";
 
-const EditEvent = ({ navigation }) => {
+const EditEvent = ({ route, navigation }) => {
+  const { item } = route.params;
   const [eventName, setEventName] = useState();
   const [oraganizer, setOrganizer] = useState();
   const [description, setDescription] = useState();
@@ -63,13 +64,23 @@ const EditEvent = ({ navigation }) => {
   function addToTags() {
     let existingTags = tags;
 
+    setTag("");
+
     existingTags.push(tag);
     setTags(existingTags);
     console.log(existingTags);
   }
   const onDismissSnackBar = () => setVisible(false);
 
-  const SubmitEvent = () => {
+  useEffect(() => {
+    setEventName(item.name);
+    setOrganizer(item.organizer);
+    setEventDate(item.date);
+    setDescription(item.description);
+    setTags(item.tags);
+  }, []);
+
+  const updateEvent = () => {
     setLoading(true);
     // get this user id from login
     let userID = 1;
@@ -84,15 +95,16 @@ const EditEvent = ({ navigation }) => {
 
     console.log(data);
     axios
-      .post(baseURL + "/aqua-org/events", data)
+      .put(baseURL + "/aqua-org/events/" + item._id, data)
       .then((response) => {
         setLoading(false);
         if (response.status == 200) {
           setVisible(true);
-          setSnackbarMessage("Event Added Succsesfully!");
+          setSnackbarMessage("Event Updated Succsesfully!");
+          navigation.navigate("YourEvents", { reloadVal: true });
         } else {
           setVisible(true);
-          setSnackbarMessage("Failed to add Event.");
+          setSnackbarMessage("Failed to Update Event.");
         }
       })
       .catch((err) => {
@@ -141,7 +153,7 @@ const EditEvent = ({ navigation }) => {
                 showMode("date");
               }}
             >
-              Date
+              <Text style={{ color: "white" }}> Date</Text>
             </Button>
           </View>
 
@@ -159,7 +171,7 @@ const EditEvent = ({ navigation }) => {
                 showMode("time");
               }}
             >
-              Time
+              <Text style={{ color: "white" }}> TIme</Text>
             </Button>
           </View>
 
@@ -221,7 +233,11 @@ const EditEvent = ({ navigation }) => {
         <View style={{ flexDirection: "row", marginTop: 2, marginBottom: 10 }}>
           {tags.map((item, key) => (
             <Chip
-              // icon="information"
+              onClose={() => {
+                console.log("test test");
+                const index = tags.indexOf(item);
+                tags.splice(index, 1);
+              }}
               textStyle={{
                 fontWeight: "800",
               }}
@@ -235,17 +251,12 @@ const EditEvent = ({ navigation }) => {
           ))}
         </View>
 
-        <Button
+        <TouchableOpacity
           style={styles.submitButton}
-          uppercase={false}
-          mode="contained"
-          onPress={() => SubmitEvent()}
-          color="#015C92"
-          loading={loading}
-          disabled={loading}
+          onPress={() => updateEvent()}
         >
-          Submit Event
-        </Button>
+          <Text style={styles.btnText}> Edit Event</Text>
+        </TouchableOpacity>
         <Snackbar
           visible={visible}
           onDismiss={onDismissSnackBar}
@@ -285,13 +296,18 @@ const styles = StyleSheet.create({
     marginTop: 3,
     marginLeft: 3,
   },
+
   submitButton: {
+    backgroundColor: "#015C92",
+    marginTop: 10,
+    marginBottom: 30,
     alignSelf: "center",
-    fontSize: 20,
-    fontWeight: "500",
+    textAlign: "center",
     borderRadius: 30,
     width: 300,
+    height: 50,
   },
+
   dateBtn: {
     width: 100,
   },
@@ -301,5 +317,12 @@ const styles = StyleSheet.create({
   chip: {
     backgroundColor: "#53A7DB",
     marginRight: 10,
+  },
+  btnText: {
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "700",
+    color: "white",
+    marginTop: 7,
   },
 });
