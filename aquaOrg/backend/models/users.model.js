@@ -17,6 +17,10 @@ const userSchema = mongoose.Schema({
     password: {
         type: String
     },
+    temporaryToken: {
+        type: String,
+        default: null
+    },
     status: {
         type: String,
         default: "1"

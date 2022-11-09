@@ -10,12 +10,17 @@ const questionAnswerSchema = mongoose.Schema({
             answer: {
                 type: String,
                 required: true
-            }
+            },
+            clarification: {
+                type: String
+            },
+            options: []
         }
     ],
+    //catagories 1. common
     qaCollectionType: {
         type: String,
-        required: true
+        default: "common"
     },
     status: {
         type: String,
@@ -33,4 +38,4 @@ const questionAnswerSchema = mongoose.Schema({
 
 const QuestionAnswers = mongoose.model('QuestionAnswers', questionAnswerSchema)
 
-export default QuestionAnswers;
+export default QuestionAnswers; 

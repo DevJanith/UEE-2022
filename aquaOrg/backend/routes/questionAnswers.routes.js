@@ -1,10 +1,11 @@
 import express from "express"
-import { getAllQuestionAnswers, getQuestionAnswers, getQuestionAnswersAccordingToType } from "../controllers/questionAnswers,controller.js"
+import { createQuestionAnswers, getAllQuestionAnswers, getQuestionAnswers, getQuestionAnswersAccordingToType } from "../controllers/questionAnswers.controller.js"
 
 const router = express.Router();
 
+router.post(`/`, createQuestionAnswers)
 router.get(`/`, getAllQuestionAnswers)
-router.put(`/:id`, getQuestionAnswers)
-router.put(`/:type`, getQuestionAnswersAccordingToType)
+router.get(`/:id`, getQuestionAnswers)
+router.get(`/question-type/:type`, getQuestionAnswersAccordingToType)
 
 export default router;
