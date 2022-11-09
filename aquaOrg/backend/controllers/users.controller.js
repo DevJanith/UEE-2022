@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import Users from "../models/users.model.js";
+import nodemailer from "nodemailer"
 
 export const login = async (req, res, next) => {
     const { email, password } = req.body;
@@ -67,14 +68,14 @@ export const register = async (req, res, next) => {
 export const resetPassword = async (req, res, next) => {
     const { email, temporaryTok, newPassword, newConfirmPassword } = req.body
     try {
-        if (temporaryPassword === null || typeof temporaryPassword == "undefined") {
+        if (temporaryTok === null || typeof temporaryTok == "undefined") {
             if (email === null || typeof email == "undefined") return res.status(400).json({ code: "02", message: "Email Field Required" })
 
             const existingUser = await Users.findOne({ email: email });
             if (!existingUser) return res.status(404).json({ code: "02", message: "User doesn't exist" })
 
-            var temporaryToken = Math.random().toString(36).slice(-8);
-            const updateUser = { temporaryToken: temporaryToken, _id: id }
+            var token = Math.random().toString(36).slice(-8);
+            const updateUser = { temporaryToken: token, _id: existingUser._id.toString() }
 
             let transporter = nodemailer.createTransport({
                 service: 'gmail',
@@ -90,9 +91,9 @@ export const resetPassword = async (req, res, next) => {
 
             let mailOptions = {
                 from: "janithgamage1.ed@gmail.com",
-                to: updateUser.email,
+                to: existingUser.email,
                 subject: 'Shop House Project',
-                text: `You are Approved to change the password!, You're Temporary password : ${temporaryToken}`
+                text: `You are Approved to change the password!, You're Temporary password : ${token}`
             };
 
             transporter.sendMail(mailOptions, function (err, data) {
@@ -103,10 +104,10 @@ export const resetPassword = async (req, res, next) => {
                 }
             });
 
-            await Users.findByIdAndUpdate(id, updateUser, { new: true })
+            const userResult = await Users.findByIdAndUpdate(existingUser._id.toString(), updateUser, { new: true })
 
             res.status(200);
-            res.json({ code: "01", result: "Temporary Password Generated" })
+            res.json({ code: "01", result: userResult })
         } else {
             if (email === null || typeof email == "undefined") return res.status(400).json({ code: "02", message: "Email Field Required" })
             if (temporaryTok === null || typeof temporaryTok == "undefined") return res.status(400).json({ code: "02", message: "Temporary Token Field Required" })
@@ -118,13 +119,12 @@ export const resetPassword = async (req, res, next) => {
             if (existingUser.temporaryToken != temporaryTok) return res.status(404).json({ code: "02", message: "Temporary Token Invalid" })
             if (newPassword !== newConfirmPassword) return res.status(400).json({ code: "02", message: "New Password doesn't match" })
 
-            const updateUser = { password: newPassword, _id: id }
-            await Users.findByIdAndUpdate(id, updateUser, { new: true })
+            const updateUser = { password: newPassword, _id: existingUser._id.toString() }
+            const userResult = await Users.findByIdAndUpdate(existingUser._id.toString(), updateUser, { new: true })
 
             res.status(200);
-            res.json({ code: "01", result: updateUser })
+            res.json({ code: "01", result: userResult })
         }
-
     } catch (e) {
         console.log(e.message);
         res.status(500).json({ code: "00", message: "Something went wrong" })
@@ -165,10 +165,10 @@ export const updateUser = async (req, res, next) => {
             contactNumber: data.contactNumber,
             _id: id
         }
-        await Users.findByIdAndUpdate(id, updateUser, { new: true })
+        const userResult = await Users.findByIdAndUpdate(id, updateUser, { new: true })
 
         res.status(200);
-        res.json({ code: "01", result: updateUser })
+        res.json({ code: "01", result: userResult })
     } catch (e) {
         console.log(e.message);
         res.status(500).json({ code: "00", message: "Something went wrong" })
