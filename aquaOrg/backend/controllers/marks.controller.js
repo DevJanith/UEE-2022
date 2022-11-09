@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import Marks from "../models/marks.model.js";
 
 export const createMarks = async (req, res, next) => {
