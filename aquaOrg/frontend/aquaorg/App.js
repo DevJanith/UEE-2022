@@ -111,7 +111,7 @@ const EventScreens = () => (
 );
 
 const QuestionAnswerScreens = () => (
-  <Stack.Navigator initialRouteName="QuestionAndAnswersSrc">
+  <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="QuestionAndAnswersSrc">
     <StackEvent.Screen name="QuestionAndAnswersSrc" component={QuestionAndAnswers} options={{ headerShown: false }} />
     <Stack.Screen name="QuickQAHome" component={QuickQAHome} options={{ title: "Quick Q & A" }} />
     <Stack.Screen name="QuickQuestion" component={QuickQuestion} options={{ title: "Quick Question" }} />
@@ -133,7 +133,7 @@ export default function App() {
   });
 
   const [isLoading, setIsLoading] = useState(true);
-  const [userAuth, setUserAuth] = useState(null);
+  const [userAuth, setUserAuth] = useState("123");
 
   const authContext = useMemo(() => {
     return {

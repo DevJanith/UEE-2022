@@ -1,6 +1,9 @@
 import React from 'react'
 import { SafeAreaView, ScrollView } from 'react-native'
+import { FocusedStatusBar } from '../../../components'
+import { DetailsHeader } from '../../../components/DetailsHeader'
 import FeatureWelcomePage from '../../../components/FeatureWelcomePage'
+import { assets } from '../../../constants'
 
 const ScoreBoardQAHome = ({ navigation }) => {
   const FeatureWelcomePageData = {
@@ -18,7 +21,7 @@ const ScoreBoardQAHome = ({ navigation }) => {
       {
         id: 3,
         content: "You can remove you’re rank details."
-      }, 
+      },
     ],
     button: {
       title: "View Score Board ...",
@@ -28,6 +31,12 @@ const ScoreBoardQAHome = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
+        <FocusedStatusBar
+          barStyle="dark-content"
+          backgroundColor="transparent"
+          translucent={true}
+        />
+        <DetailsHeader navigation={navigation} image={assets.b8} />
         <FeatureWelcomePage FeatureWelcomePageData={FeatureWelcomePageData} navigation={navigation} />
       </ScrollView>
     </SafeAreaView>
