@@ -17,7 +17,7 @@ import ResetPassword from "./screens/auth/ResetPassword";
 import Donation from "./screens/Donation";
 import Event from "./screens/Event";
 import Home from "./screens/Home";
-import Info from "./screens/Info";
+// import Info from "./screens/Info";
 import Splash from "./screens/other/Splash";
 import QuestionAndAnswers from "./screens/QuestionAndAnswers";
 import Profile from "./screens/user/Profile";
@@ -38,6 +38,18 @@ import EditEvent from "./screens/events/EditEvent";
 import { QuickAnswer, QuickQAHome, QuickQuestion } from "./screens/questionAndAnswers/quickQA";
 import { Previous, PreviousQAHome } from "./screens/questionAndAnswers/previousQA";
 import { ScoreBoard, ScoreBoardQAHome } from "./screens/questionAndAnswers/scoreBoardQA";
+
+import InfoHome from "./screens/Information Management/Home";
+import InfoCategories from "./screens/Information Management/Categories";
+import InfoSeaAnimal from "./screens/Information Management/SeaAnimal";
+import BlueWhale from "./screens/Information Management/BlueWhale/BlueWhale";
+import BlueWhaleIntroduction from "./screens/Information Management/BlueWhale/Introduction";
+import BlueWhaleInformation from "./screens/Information Management/BlueWhale/Information";
+import BlueWhaleHologram from "./screens/Information Management/BlueWhale/Hologram";
+import BlueWhaleExplore from "./screens/Information Management/BlueWhale/Explore";
+
+import AddInfoHome from "./screens/Information Management/UserAddInfo/WantAddInfo";
+
 
 //internal styling
 const theme = {
@@ -123,6 +135,25 @@ const QuestionAnswerScreens = () => (
   </Stack.Navigator>
 )
 
+const InformationScreens = () => (
+  <Stack.Navigator initialRouteName="InformationSrc">
+    {/* <Stack.Screen name="InformationSrc" component={Info} options={{ headerShown: false }} /> */}
+    <Stack.Screen name="InformationSrc" component={InfoHome} options={{ headerShown: false }} />
+    <Stack.Screen name="InfoCategories" component={InfoCategories} options={{ title: "Categories" }} />
+    <Stack.Screen name="InfoSeaAnimal" component={InfoSeaAnimal} options={{ title: "Sea Animal" }} />
+    <Stack.Screen name="BlueWhale" component={BlueWhale} options={{ title: "Blue Whale" }} />
+    <Stack.Screen name="BlueWhaleIntroduction" component={BlueWhaleIntroduction} options={{ title: "Introduction" }} />
+    <Stack.Screen name="BlueWhaleInformation" component={BlueWhaleInformation} options={{ title: "Information" }} />
+    <Stack.Screen name="BlueWhaleHologram" component={BlueWhaleHologram} options={{ title: "Hologram" }} />
+    <Stack.Screen name="BlueWhaleExplore" component={BlueWhaleExplore} options={{ title: "Explore" }} />
+
+    {/* Add Information */}
+    <Stack.Screen name="AddInfoHome" component={AddInfoHome} options={{ headerShown: false }} />
+
+
+  </Stack.Navigator>
+)
+
 export default function App() {
   const [loaded] = useFonts({
     InterBold: require("./assets/fonts/Inter-Bold.ttf"),
@@ -133,7 +164,7 @@ export default function App() {
   });
 
   const [isLoading, setIsLoading] = useState(true);
-  const [userAuth, setUserAuth] = useState(null);
+  const [userAuth, setUserAuth] = useState("1233");
 
   const authContext = useMemo(() => {
     return {
@@ -170,7 +201,30 @@ export default function App() {
         {userAuth ? (
           <Drawer.Navigator initialRouteName="Home">
             <Drawer.Screen name="Home" component={HomeScreens} />
-            <Drawer.Screen name="Info" component={Info} />
+            <Drawer.Screen
+              name="InfoHome"
+              component={InformationScreens}
+              options={({ route }) => {
+                // console.log(getFocusedRouteNameFromRoute(route))
+                const routeName =
+                  getFocusedRouteNameFromRoute(route) ?? "InformationSrc";
+
+                if (typeof routeName == "undefined") return;
+                if (
+                  routeName == "InfoCategories" ||
+                  routeName == "InfoSeaAnimal" ||
+                  routeName == "BlueWhale" ||
+                  routeName == "BlueWhaleIntroduction" ||
+                  routeName == "BlueWhaleInformation" ||
+                  routeName == "BlueWhaleHologram" ||
+                  routeName == "BlueWhaleExplore" ||
+                  routeName == "AddInfoHome"
+                )
+                  return { headerShown: false }
+
+                return { title: "Information" }
+              }}
+            />
             <Drawer.Screen
               name="QuestionAndAnswers"
               component={QuestionAnswerScreens}
@@ -186,7 +240,7 @@ export default function App() {
                   routeName == "QuickQuestion" ||
                   routeName == "QuickAnswer" ||
                   routeName == "Previous" ||
-                  routeName == "ScoreBoard" 
+                  routeName == "ScoreBoard"
                 ) return { headerShown: false }
                 return { title: "Question &  ANswers" }
               }}

@@ -84,7 +84,7 @@ const Event = ({ navigation }) => {
                   marginLeft: 3,
                 }}
               >
-                View More...
+                View More
               </Text>
             </TouchableOpacity>
           </View>

@@ -3,7 +3,7 @@ import { Image, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, Vie
 import FocusedStatusBar from '../components/FocusedStatusBar'
 import { assets, COLORS, FONTS, SHADOWS, SIZES } from '../constants'
 
-const Info = ({ onSearch }) => {
+const Info = ({ onSearch, navigation }) => {
     return (
         <SafeAreaView
             style={{
@@ -102,7 +102,8 @@ const Info = ({ onSearch }) => {
                                                 alignContent: "center",
                                                 justifyContent: "center"
                                             }}
-                                            onPress={() => { }}
+                                            // onPress={() => { alert("test alert") }}
+                                            onPress={() => { navigation.push('InfoCategories') }}
                                         >
                                             <View style={{ flexDirection: "row" }}>
                                                 <Text style={{
@@ -167,7 +168,7 @@ const Info = ({ onSearch }) => {
                                             alignContent: "center",
                                             justifyContent: "center"
                                         }}
-                                        onPress={() => { }}
+                                        onPress={() => { navigation.push('InfoHome') }}
                                     >
                                         <Text style={{
                                             fontFamily: FONTS.regular,
