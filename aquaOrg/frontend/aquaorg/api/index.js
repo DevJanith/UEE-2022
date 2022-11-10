@@ -7,7 +7,7 @@ const aquaOrgAPI = axios.create({
 export const login = (data) => aquaOrgAPI.post(`users/login`, data);
 export const registration = (data) => aquaOrgAPI.post(`users/register`, data);
 export const resetPassword = (data) => aquaOrgAPI.put(`users/password-reset`, data);
-export const getUser = () => aquaOrgAPI.get(`users/${id}`);
+export const getUser = (id) => aquaOrgAPI.get(`users/${id}`);
 export const updateUser = (id) => aquaOrgAPI.put(`users/${id}`);
 
 
