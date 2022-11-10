@@ -49,6 +49,7 @@ import BlueWhaleHologram from "./screens/Information Management/BlueWhale/Hologr
 import BlueWhaleExplore from "./screens/Information Management/BlueWhale/Explore";
 
 import AddInfoHome from "./screens/Information Management/UserAddInfo/WantAddInfo";
+import AddInfoCreate from "./screens/Information Management/UserAddInfo/AddInfo_SeaAnimal";
 
 
 //internal styling
@@ -140,8 +141,8 @@ const InformationScreens = () => (
     {/* <Stack.Screen name="InformationSrc" component={Info} options={{ headerShown: false }} /> */}
     <Stack.Screen name="InformationSrc" component={InfoHome} options={{ headerShown: false }} />
     <Stack.Screen name="InfoCategories" component={InfoCategories} options={{ title: "Categories" }} />
-    <Stack.Screen name="InfoSeaAnimal" component={InfoSeaAnimal} options={{ title: "Sea Animal" }} />
-    <Stack.Screen name="BlueWhale" component={BlueWhale} options={{ title: "Blue Whale" }} />
+    <Stack.Screen name="InfoSeaAnimal" component={InfoSeaAnimal} options={{ headerShown: false }} />
+    <Stack.Screen name="BlueWhale" component={BlueWhale} options={{ headerShown: false }} />
     <Stack.Screen name="BlueWhaleIntroduction" component={BlueWhaleIntroduction} options={{ title: "Introduction" }} />
     <Stack.Screen name="BlueWhaleInformation" component={BlueWhaleInformation} options={{ title: "Information" }} />
     <Stack.Screen name="BlueWhaleHologram" component={BlueWhaleHologram} options={{ title: "Hologram" }} />
@@ -149,6 +150,7 @@ const InformationScreens = () => (
 
     {/* Add Information */}
     <Stack.Screen name="AddInfoHome" component={AddInfoHome} options={{ headerShown: false }} />
+    <Stack.Screen name="AddInfoCreate" component={AddInfoCreate} options={{ headerShown: false }} />
 
 
   </Stack.Navigator>
@@ -218,7 +220,8 @@ export default function App() {
                   routeName == "BlueWhaleInformation" ||
                   routeName == "BlueWhaleHologram" ||
                   routeName == "BlueWhaleExplore" ||
-                  routeName == "AddInfoHome"
+                  routeName == "AddInfoHome" ||
+                  routeName == "AddInfoCreate"
                 )
                   return { headerShown: false }
 

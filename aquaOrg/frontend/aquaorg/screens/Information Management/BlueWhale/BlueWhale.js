@@ -30,7 +30,7 @@ function BlueWhale({ onSearch, navigation }) {
                     paddingHorizontal:20
                 }}>
                     <TouchableOpacity
-                        // onPress={()=>this.props.navigation.navigate("Cources")}
+                        onPress={() => { navigation.push('InfoSeaAnimal') }}
                         style={{
                             paddingHorizontal:10,
                             paddingVertical:13,
@@ -44,19 +44,7 @@ function BlueWhale({ onSearch, navigation }) {
                                 style={{height:15,width:20}}
                             />
                     </TouchableOpacity>
-                    <View style={{
-                        paddingHorizontal:10,
-                        paddingVertical:13,
-                        borderRadius:10,
-                        marginTop:30,
-                        backgroundColor:'rgba(52, 52, 52, 0.4)',
-                        marginLeft:310
-                    }}>
-                        <Image
-                            source={require('../../../assets/images/Info/home_menu.png')}
-                            style={{height:15,width:20}}
-                        />
-                    </View>
+                    
                 </View>
 
                 <Text style={{

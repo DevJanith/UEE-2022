@@ -30,7 +30,7 @@ const SeaAnimal = ({ onSearch, navigation }) => {
                     paddingHorizontal:20
                 }}>
                     <TouchableOpacity
-                        onPress={() => { navigation.push('InfoHome') }}
+                        onPress={() => { navigation.push('InformationSrc') }}
                         style={{
                             paddingHorizontal:10,
                             paddingVertical:13,
@@ -44,19 +44,6 @@ const SeaAnimal = ({ onSearch, navigation }) => {
                             style={{width:20,height:15}}
                         />
                     </TouchableOpacity>
-                        <View style={{
-                            paddingHorizontal:10,
-                            paddingVertical:13,
-                            borderRadius:10,
-                            marginTop:30,
-                            backgroundColor:"#8bbcdb",
-                            marginLeft:320
-                        }}> 
-                                <Image
-                                    source={require('../../assets/images/Info/home_menu.png')}
-                                    style={{height:15,width:20}}
-                                />
-                        </View>
             </View>
 
                 <Text style={{

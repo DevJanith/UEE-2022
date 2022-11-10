@@ -14,7 +14,7 @@ import FocusedStatusBar from '../../../components/FocusedStatusBar'
 import { COLORS, FONTS, SIZES } from '../../../constants'
 import SeaAnimalList from '../SeaAnimalList'
 
-const WantAddInfo = () => {
+const WantAddInfo = ({ navigation }) => {
   return (
 
     <ImageBackground
@@ -31,7 +31,7 @@ const WantAddInfo = () => {
         paddingHorizontal: 20
       }}>
         <TouchableOpacity
-          onPress={() => { navigation.push('InfoHome') }}
+          onPress={() => { navigation.push('InformationSrc') }}
           style={{
             paddingHorizontal: 10,
             paddingVertical: 13,
@@ -64,8 +64,8 @@ const WantAddInfo = () => {
         <Image
           source={require('../../../assets/images/Info/question_2.png')}
           style={{
-            width: 25,
-            height: 25,
+            width: 50,
+            height: 50,
           }}
         />
 
@@ -83,7 +83,7 @@ const WantAddInfo = () => {
           borderTopLeftRadius: 60,
           borderTopRightRadius: 60
         }}
-        alwaysOpen={400}
+        alwaysOpen={450}
         scrollViewProps={{ showsVerticalScrollIndicator: false }}
       >
 
@@ -92,7 +92,7 @@ const WantAddInfo = () => {
           marginBottom: 10
         }}>
           <SeaAnimalList
-            onPress={() => { navigation.push('BlueWhale') }}
+            onPress={() => { navigation.push('AddInfoCreate') }}
             img={require('../../../assets/images/Info/blue_whale.png')}
             title="Blue Whale"
             bg="#C8E7F9"
