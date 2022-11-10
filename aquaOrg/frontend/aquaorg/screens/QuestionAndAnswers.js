@@ -4,9 +4,10 @@ import FocusedStatusBar from '../components/FocusedStatusBar'
 import { assets, COLORS, FONTS, SIZES } from '../constants'
 import RBSheet from "react-native-raw-bottom-sheet";
 
-const QuestionAndAnswers = ({ navigation }) => {
+const QuestionAndAnswers = ({ navigation, loginSuccessData }) => {
   const refRBSheet = useRef();
 
+  console.log(">>>>>>>>>>>>>>> here login user      -- ", loginSuccessData);
   return (
     <SafeAreaView
       style={{
