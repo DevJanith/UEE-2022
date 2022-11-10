@@ -39,6 +39,10 @@ const YourEvents = ({ route, navigation }) => {
 
   const onDismissSnackBar = () => setVisible(false);
 
+  const editEvent = (item) => {
+    navigation.navigate("EditEvent", { item });
+  };
+
   useEffect(() => {
     getEventsData();
     setEvents(data);

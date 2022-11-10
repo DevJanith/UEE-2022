@@ -8,10 +8,13 @@ import user from "../assets/icons/user.png";
 import password from "../assets/icons/password.png";
 import contact from "../assets/icons/contact.png";
 import email from "../assets/icons/email.png";
+import add from "../assets/icons/add.png";
+import like from "../assets/icons/like.png";
+import list from "../assets/icons/list.png";
+import your_list from "../assets/icons/your_list.png";
 import learning from "../assets/icons/learning.png";
 import passwordView from "../assets/icons/passwordView.png";
 import passwordHide from "../assets/icons/passwordHide.png";
-
 
 import logo from "../assets/images/logo.png";
 import nft01 from "../assets/images/nft01.png";
@@ -51,6 +54,10 @@ export default {
   password,
   contact,
   email,
+  add,
+  like,
+  list,
+  your_list,
   learning,
   passwordView,
   passwordHide,

@@ -189,6 +189,59 @@ const ViewEvent = ({ route, navigation }) => {
                 {item.date}
               </Text>
             </View>
+
+            {/* <View
+              style={{
+                flexDirection: "row",
+                marginTop: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 15,
+                }}
+              >
+                Member(s) :
+              </Text>
+
+              {item.members.map((item, key) => (
+                <Text
+                  style={{
+                    fontSize: 15,
+                    marginLeft: 5,
+                  }}
+                >
+                  {item},{" "}
+                </Text>
+              ))}
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 15,
+                }}
+              >
+                Participant(s) :
+              </Text>
+
+              {item.participants.map((item, key) => (
+                <Text
+                  style={{
+                    fontSize: 15,
+                    marginLeft: 5,
+                  }}
+                >
+                  {item},{" "}
+                </Text>
+              ))}
+            </View> */}
           </Card.Content>
         </Card>
 
