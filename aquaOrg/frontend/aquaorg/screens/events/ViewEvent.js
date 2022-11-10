@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button, Card, Chip, FAB, Snackbar, Title } from "react-native-paper";
+import { AuthContext } from "../../context/context";
 import baseURL from "../../store";
 
 const ViewEvent = ({ route, navigation }) => {
+  const { userDetails } = useContext(AuthContext);
   const { item } = route.params;
 
   const [visible, setVisible] = useState(false);
@@ -19,7 +21,7 @@ const ViewEvent = ({ route, navigation }) => {
     console.log(item);
 
     // get this user id from login
-    let userID = 1;
+    let userID = userDetails._id;
     const data = {
       user: userID,
       name: item.name,

@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
 
   eventCard: {
     height: 100,
-    width: 170,
+    width: 175,
     margin: 10,
     backgroundColor: "#BCE6FF",
     borderRadius: 20,

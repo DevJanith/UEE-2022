@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -19,9 +19,11 @@ import {
   Snackbar,
   Title,
 } from "react-native-paper";
+import { AuthContext } from "../../context/context";
 import baseURL from "../../store";
 
 const ViewEventUser = ({ route, navigation }) => {
+  const { userDetails } = useContext(AuthContext);
   const { item } = route.params;
 
   const [visible, setVisible] = useState(false);
@@ -40,7 +42,7 @@ const ViewEventUser = ({ route, navigation }) => {
     console.log(item);
 
     // get this user id from login
-    let userID = 1;
+    let userID = userDetails._id;
     const data = {
       user: userID,
       name: item.name,
