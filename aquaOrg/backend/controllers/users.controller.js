@@ -148,8 +148,6 @@ export const getUser = async (req, res, next) => {
     } catch (e) {
         console.log(e.message);
         res.status(500).json({ code: "00", message: "Something went wrong" })
-
-        throw e;
     }
 }
 

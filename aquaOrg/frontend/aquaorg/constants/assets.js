@@ -9,6 +9,9 @@ import password from "../assets/icons/password.png";
 import contact from "../assets/icons/contact.png";
 import email from "../assets/icons/email.png";
 import learning from "../assets/icons/learning.png";
+import passwordView from "../assets/icons/passwordView.png";
+import passwordHide from "../assets/icons/passwordHide.png";
+
 
 import logo from "../assets/images/logo.png";
 import nft01 from "../assets/images/nft01.png";
@@ -49,6 +52,8 @@ export default {
   contact,
   email,
   learning,
+  passwordView,
+  passwordHide,
 
   logo,
   nft01,
