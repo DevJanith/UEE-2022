@@ -113,7 +113,7 @@ const EventScreens = () => (
 
 const QuestionAnswerScreens = ({ loginSuccessData }) => (
   <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="QuestionAndAnswersSrc">
-    <Stack.Screen name="QuestionAndAnswersSrc" component={() => <QuestionAndAnswers loginSuccessData={loginSuccessData} />} options={{ headerShown: false }} />
+    <Stack.Screen name="QuestionAndAnswersSrc" component={QuestionAndAnswers} options={{ headerShown: false }} />
     <Stack.Screen name="QuickQAHome" component={QuickQAHome} options={{ title: "Quick Q & A" }} />
     <Stack.Screen name="QuickQuestion" component={QuickQuestion} options={{ title: "Quick Question" }} />
     <Stack.Screen name="QuickAnswer" component={QuickAnswer} options={{ title: "Quick Answer" }} />
@@ -174,6 +174,7 @@ export default function App() {
         setIsLoading(false);
         setUserAuth(null);
       },
+      userDetails: loginSuccessData
     };
   }, []);
 
@@ -198,7 +199,7 @@ export default function App() {
             <Drawer.Screen name="Info" component={Info} />
             <Drawer.Screen
               name="QuestionAndAnswers"
-              component={() => <QuestionAnswerScreens loginSuccessData={loginSuccessData} />}
+              component={QuestionAnswerScreens}
               options={({ route }) => {
                 // console.log(getFocusedRouteNameFromRoute(route));
                 const routeName =
