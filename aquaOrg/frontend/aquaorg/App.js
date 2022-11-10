@@ -191,7 +191,7 @@ export default function App() {
       },
       userDetails: loginSuccessData
     };
-  }, []);
+  }, [loginSuccessData]);
 
   useEffect(() => {
     setTimeout(() => {
