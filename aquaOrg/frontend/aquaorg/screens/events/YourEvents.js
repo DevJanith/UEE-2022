@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Card,
@@ -13,8 +13,11 @@ import {
 import { FlatList } from "react-native-gesture-handler";
 import axios from "axios";
 import baseURL from "../../store";
+import { AuthContext } from "../../context/context";
 
 const YourEvents = ({ route, navigation }) => {
+  const { userDetails } = useContext(AuthContext);
+
   let { reloadVal } = route.params;
   const [events, setEvents] = useState();
   const [loading, setLoading] = useState(false);
@@ -24,7 +27,7 @@ const YourEvents = ({ route, navigation }) => {
 
   const getEventsData = () => {
     setLoading(true);
-    let userID = 1;
+    let userID = userDetails._id;
     axios
       .get(baseURL + "/aqua-org/events/user/" + userID)
       .then((response) => {
@@ -38,6 +41,10 @@ const YourEvents = ({ route, navigation }) => {
   };
 
   const onDismissSnackBar = () => setVisible(false);
+
+  const editEvent = (item) => {
+    navigation.navigate("EditEvent", { item });
+  };
 
   useEffect(() => {
     getEventsData();

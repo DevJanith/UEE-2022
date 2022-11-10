@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -19,9 +19,11 @@ import {
   Snackbar,
   Title,
 } from "react-native-paper";
+import { AuthContext } from "../../context/context";
 import baseURL from "../../store";
 
 const ViewEventUser = ({ route, navigation }) => {
+  const { userDetails } = useContext(AuthContext);
   const { item } = route.params;
 
   const [visible, setVisible] = useState(false);
@@ -32,11 +34,15 @@ const ViewEventUser = ({ route, navigation }) => {
   const onDismissSnackBar = () => setVisible(false);
   const hideDialog = () => setShowDialog(false);
 
+  const editEvent = (item) => {
+    navigation.navigate("EditEvent", { item });
+  };
+
   const deleteEvent = () => {
     console.log(item);
 
     // get this user id from login
-    let userID = 1;
+    let userID = userDetails._id;
     const data = {
       user: userID,
       name: item.name,
@@ -53,7 +59,7 @@ const ViewEventUser = ({ route, navigation }) => {
         if (response.status == 200) {
           setVisible(true);
           setSnackbarMessage("Event Deleted!");
-          navigation.navigate("YourEvents", { reloadVal: false });
+          navigation.navigate("YourEvents", { reloadVal: Math.random() });
         } else {
           setVisible(true);
           setSnackbarMessage("Failed to delete Event.");
@@ -75,14 +81,7 @@ const ViewEventUser = ({ route, navigation }) => {
             paddingTop: 20,
           }}
         >
-          <Card
-            elevation={5}
-            style={styles.eventCard}
-            mode={"elevated"}
-            onPress={() => {
-              navigation.navigate("ViewEvent", { item });
-            }}
-          >
+          <Card elevation={5} style={styles.eventCard} mode={"elevated"}>
             <Card.Content>
               <View
                 style={{
@@ -213,6 +212,59 @@ const ViewEventUser = ({ route, navigation }) => {
                   {item.date}
                 </Text>
               </View>
+
+              {/* <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 15,
+                  }}
+                >
+                  Member(s) :
+                </Text>
+
+                {item.members.map((item, key) => (
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      marginLeft: 5,
+                    }}
+                  >
+                    {item},{" "}
+                  </Text>
+                ))}
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  marginTop: 10,
+                }}
+              >
+                <Text
+                  style={{
+                    fontWeight: "bold",
+                    fontSize: 15,
+                  }}
+                >
+                  Participant(s) :
+                </Text>
+
+                {item.participants.map((item, key) => (
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      marginLeft: 5,
+                    }}
+                  >
+                    {item},{" "}
+                  </Text>
+                ))}
+              </View> */}
             </Card.Content>
           </Card>
 

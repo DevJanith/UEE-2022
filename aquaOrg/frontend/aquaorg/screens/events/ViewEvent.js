@@ -1,11 +1,13 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Button, Card, Chip, FAB, Snackbar, Title } from "react-native-paper";
+import { AuthContext } from "../../context/context";
 import baseURL from "../../store";
 
 const ViewEvent = ({ route, navigation }) => {
+  const { userDetails } = useContext(AuthContext);
   const { item } = route.params;
 
   const [visible, setVisible] = useState(false);
@@ -19,7 +21,7 @@ const ViewEvent = ({ route, navigation }) => {
     console.log(item);
 
     // get this user id from login
-    let userID = 1;
+    let userID = userDetails._id;
     const data = {
       user: userID,
       name: item.name,
@@ -189,6 +191,59 @@ const ViewEvent = ({ route, navigation }) => {
                 {item.date}
               </Text>
             </View>
+
+            {/* <View
+              style={{
+                flexDirection: "row",
+                marginTop: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 15,
+                }}
+              >
+                Member(s) :
+              </Text>
+
+              {item.members.map((item, key) => (
+                <Text
+                  style={{
+                    fontSize: 15,
+                    marginLeft: 5,
+                  }}
+                >
+                  {item},{" "}
+                </Text>
+              ))}
+            </View>
+            <View
+              style={{
+                flexDirection: "row",
+                marginTop: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  fontSize: 15,
+                }}
+              >
+                Participant(s) :
+              </Text>
+
+              {item.participants.map((item, key) => (
+                <Text
+                  style={{
+                    fontSize: 15,
+                    marginLeft: 5,
+                  }}
+                >
+                  {item},{" "}
+                </Text>
+              ))}
+            </View> */}
           </Card.Content>
         </Card>
 

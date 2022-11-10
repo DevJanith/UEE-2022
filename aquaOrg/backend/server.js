@@ -8,6 +8,11 @@ import mongoose from "mongoose";
 
 import interestedRoutes from "./routes/interested.routes.js";
 import eventRoutes from "./routes/events.routes.js";
+import usersRoutes from "./routes/users.routes.js";
+import questionAnswersRoutes from "./routes/questionAnswers.routes.js";
+import marksRoutes from "./routes/marks.routes.js";
+import seaAnimalRoutes from "./routes/seaAnimal.routes.js";
+
 
 dotenv.config();
 const app = express();
@@ -24,6 +29,11 @@ app.get("/", (req, res) => {
 
 app.use("/aqua-org/events", eventRoutes);
 app.use("/aqua-org/interested", interestedRoutes);
+app.use("/aqua-org/users", usersRoutes);
+app.use("/aqua-org/marks", marksRoutes);
+app.use("/aqua-org/question-answers", questionAnswersRoutes);
+app.use("/aqua-org/sea-animal", seaAnimalRoutes);
+
 
 const CONNECTION_URL = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@cluster0.pksoehr.mongodb.net/?retryWrites=true&w=majority`;
 
