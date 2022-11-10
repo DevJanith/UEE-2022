@@ -1,11 +1,50 @@
-import React, { useContext } from 'react'
-import { Button, Image, SafeAreaView, ScrollView, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import React, { useContext, useState } from 'react'
+import { Image, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Snackbar } from 'react-native-paper'
 import { FocusedStatusBar } from '../../components'
 import { assets, COLORS, FONTS, SIZES } from '../../constants'
 import { AuthContext } from '../../context/context'
+import { requiredFieldValidation } from '../../util/validation'
 
 const Login = ({ navigation }) => {
     const { login } = useContext(AuthContext)
+    const [formData, setFormData] = useState({
+        email: "",
+        password: ""
+    })
+
+    const [validEmail, setValidEmail] = useState({ result: false, desc: "" })
+    const [validPassword, setValidPassword] = useState({ result: false, desc: "" })
+
+    const [viewPassword, setViewPassword] = useState(true)
+    const [visible, setVisible] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+
+    const onDismissSnackBar = () => setVisible(false);
+
+    const onChangeEmail = (value) => {
+        setValidEmail(requiredFieldValidation(value))
+        setFormData({ ...formData, email: value })
+    }
+
+    const onChangePassword = (value) => {
+        setValidPassword(requiredFieldValidation(value))
+        setFormData({ ...formData, password: value })
+    }
+
+    const onFormSubmit = () => {
+        if (!validEmail.result) {
+            setVisible(true)
+            setSnackbarMessage(validEmail.desc == "" ? "Required Fields Can not be empty" : validEmail.desc)
+            return false
+        }
+        if (!validPassword.result) {
+            setVisible(true)
+            setSnackbarMessage(validPassword.desc == "" ? "Required Fields Can not be empty" : validPassword.desc)
+            return false
+        }
+        login(formData)
+    }
 
     return (
         <>
@@ -23,8 +62,8 @@ const Login = ({ navigation }) => {
                                 fontFamily: FONTS.bold,
                                 fontSize: 60,
                                 color: COLORS.white,
-                                marginTop: 250,
-                                marginBottom: 50,
+                                marginTop: 150,
+                                marginBottom: 30,
                                 textAlign: "center"
                             }}>
                                 Login
@@ -40,7 +79,7 @@ const Login = ({ navigation }) => {
                                     color: COLORS.primary,
                                     margin: SIZES.base
                                 }}>
-                                    User Name
+                                    User Name (*)
                                 </Text>
                                 <View style={{
                                     width: "100%",
@@ -63,8 +102,8 @@ const Login = ({ navigation }) => {
                                     />
                                     <TextInput
                                         placeholder='Enter User Name'
-                                        style={{ flex: 1, color: COLORS.white }}
-                                        onChangeText={() => { }}
+                                        style={{ flex: 1, color: COLORS.primary }}
+                                        onChangeText={(value) => onChangeEmail(value)}
                                     />
                                 </View>
                                 <Text style={{
@@ -73,7 +112,7 @@ const Login = ({ navigation }) => {
                                     color: COLORS.primary,
                                     margin: SIZES.base
                                 }}>
-                                    Password
+                                    Password (*)
                                 </Text>
                                 <View style={{
                                     width: "100%",
@@ -96,10 +135,26 @@ const Login = ({ navigation }) => {
                                     />
                                     <TextInput
                                         placeholder='Enter Password'
-                                        secureTextEntry={true}
-                                        style={{ flex: 1, color: COLORS.white }}
-                                        onChangeText={() => { }}
+                                        secureTextEntry={viewPassword}
+                                        style={{ flex: 1, color: COLORS.primary }}
+                                        onChangeText={(value) => onChangePassword(value)}
                                     />
+                                    <TouchableOpacity
+                                        style={{
+                                            backgroundColor: COLORS.white,
+                                            padding: 5,
+                                            borderRadius: 50
+                                        }}
+                                        onPress={() => { setViewPassword((prev) => { return !prev }) }}>
+                                        <Image
+                                            source={viewPassword ? assets.passwordHide : assets.passwordView}
+                                            resizeMode="contain"
+                                            style={{
+                                                height: 20,
+                                                width: 20,
+                                            }}
+                                        />
+                                    </TouchableOpacity>
                                 </View>
                             </View>
                             <View
@@ -120,6 +175,7 @@ const Login = ({ navigation }) => {
                                             fontSize: SIZES.medium,
                                             color: COLORS.primary,
                                             textAlign: "left",
+                                            cursor: "pointer"
                                         }}
                                         onPress={() => { navigation.push("ResetPassword") }}
                                     > Click Here</Text>
@@ -143,7 +199,7 @@ const Login = ({ navigation }) => {
                                         width: '50%'
 
                                     }}
-                                    onPress={() => { login() }}
+                                    onPress={() => { onFormSubmit() }}
                                 >
                                     <Text style={{
                                         fontFamily: FONTS.bold,
@@ -192,13 +248,25 @@ const Login = ({ navigation }) => {
                                 resizeMode="cover"
                                 style={{
                                     width: "100%",
-                                    height: 400,
+                                    height: 300,
                                     borderBottomLeftRadius: SIZES.medium,
                                     borderBottomRightRadius: SIZES.medium,
                                 }}
                             />
                         </View>
                     </View>
+                    <Snackbar
+                        visible={visible}
+                        onDismiss={onDismissSnackBar}
+                        action={{
+                            label: "Dismiss",
+                            onPress: () => {
+                                setVisible(false);
+                            },
+                        }}
+                    >
+                        {snackbarMessage}
+                    </Snackbar>
                 </ScrollView>
             </SafeAreaView >
         </>
