@@ -190,6 +190,7 @@ const Home = ({ onSearch, navigation }) => {
                                 marginTop: 30,
                                 marginLeft: 40,
                                 alignContent: "center",
+                                elevation:10
                             }}
                             onPress={() => { navigation.push('InfoSeaAnimal') }}
                             >
@@ -286,7 +287,10 @@ const Home = ({ onSearch, navigation }) => {
                                     marginTop: 15
                                 }}
                             >You can share your knlowledge 
-                            by sharing with others......</Text>
+                            by sharing with others......
+                            {'\n'}{'\n'}
+                            Knowledge can only be volunteered it cannot be conscripted
+                            </Text>
 
                             <TouchableOpacity
                                 onPress={() => { navigation.push('AddInfoHome') }}
@@ -306,7 +310,8 @@ const Home = ({ onSearch, navigation }) => {
                                     style={{
                                         color: "#FFF",
                                         fontFamily: FONTS.bold,
-                                        fontSize: 15
+                                        fontSize: 12,
+                                        marginLeft: 10
                                     }}>
                                     Click Here
                                 </Text>

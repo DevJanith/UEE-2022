@@ -93,7 +93,7 @@ function BlueWhale({ onSearch, navigation }) {
                             borderTopLeftRadius:60,
                             borderTopRightRadius:60
                         }}
-                        alwaysOpen={550}
+                        alwaysOpen={580}
                         scrollViewProps={{ showsVerticalScrollIndicator:false }}
                     >
 
