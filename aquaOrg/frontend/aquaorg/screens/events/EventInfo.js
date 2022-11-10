@@ -106,7 +106,7 @@ const EventInfo = ({ navigation }) => {
                       marginTop: 10,
                     }}
                   >
-                    2. How to add event?
+                    2. Can I remove event added by me ?
                   </Text>
                   <Text
                     style={{
@@ -116,8 +116,7 @@ const EventInfo = ({ navigation }) => {
                       marginTop: 4,
                     }}
                   >
-                    When you go to event dashboard, you can view event adding
-                    functionality there.
+                    Yes, You can edit or remove event added by you.
                   </Text>
                 </Card.Content>
               </Card>
