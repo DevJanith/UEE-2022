@@ -1,5 +1,5 @@
 import { View, Text, SafeAreaView, StyleSheet } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Card,
@@ -13,8 +13,11 @@ import {
 import { FlatList } from "react-native-gesture-handler";
 import axios from "axios";
 import baseURL from "../../store";
+import { AuthContext } from "../../context/context";
 
 const AllEvents = ({ navigation }) => {
+  const { userDetails } = useContext(AuthContext);
+
   const [events, setEvents] = useState();
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -39,7 +42,7 @@ const AllEvents = ({ navigation }) => {
     console.log(item);
 
     // get this user id from login
-    let userID = 1;
+    let userID = userDetails._id;
     const data = {
       user: userID,
       name: item.name,
