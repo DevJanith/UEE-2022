@@ -188,7 +188,7 @@ export default function App() {
                   routeName == "Previous" ||
                   routeName == "ScoreBoard" 
                 ) return { headerShown: false }
-                return { title: "Question &  ANswers" }
+                return { title: "Question &  Answers" }
               }}
             />
             <Drawer.Screen
