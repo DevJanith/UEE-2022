@@ -1,11 +1,79 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Image, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Snackbar } from 'react-native-paper'
 import { FocusedStatusBar } from '../../components'
 import { assets, COLORS, FONTS, SIZES } from '../../constants'
 import { AuthContext } from '../../context/context'
+import { confirmPasswordValidation, contactNumberValidation, emailValidation, passwordValidation } from '../../util/validation'
 
 const Registration = ({ navigation }) => {
     const { register } = useContext(AuthContext)
+
+    const [formData, setFormData] = useState({
+        email: "",
+        name: "",
+        contactNumber: "",
+        password: "",
+        confirmPassword: ""
+    })
+    const [validEmail, setValidEmail] = useState({ result: false, desc: "" })
+    const [validContactNumber, setValidContactNumber] = useState({ result: false, desc: "" })
+    const [validPassword, setValidPassword] = useState({ result: false, desc: "" })
+    const [validConfirmPassword, setValidConfirmPassword] = useState({ result: false, desc: "" })
+
+    const [viewPassword, setViewPassword] = useState(true)
+    const [visible, setVisible] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+
+    const onDismissSnackBar = () => setVisible(false);
+
+    const onChangeEmail = (value) => {
+        setValidEmail(emailValidation(value))
+        setFormData({ ...formData, email: value })
+    }
+
+    const onChangeName = (value) => {
+        setFormData({ ...formData, name: value })
+    }
+
+    const onChangeContactNumber = (value) => {
+        setValidContactNumber(contactNumberValidation(value))
+        setFormData({ ...formData, contactNumber: value })
+    }
+
+    const onChangePassword = (value) => {
+        setValidPassword(passwordValidation(value))
+        setFormData({ ...formData, password: value })
+    }
+
+    const onChangeConfirmPassword = (value) => {
+        setValidConfirmPassword(confirmPasswordValidation(value, formData))
+        setFormData({ ...formData, confirmPassword: value })
+    }
+
+    const onFormSubmit = () => {
+        if (!validEmail.result) {
+            setVisible(true)
+            setSnackbarMessage(validEmail.desc == "" ? "Required Fields Can not be empty" : validEmail.desc)
+            return false
+        }
+        if (!validContactNumber.result) {
+            setVisible(true)
+            setSnackbarMessage(validContactNumber.desc == "" ? "Required Fields Can not be empty" : validContactNumber.desc)
+            return false
+        }
+        if (!validPassword.result) {
+            setVisible(true)
+            setSnackbarMessage(validPassword.desc == "" ? "Required Fields Can not be empty" : validPassword.desc)
+            return false
+        }
+        if (!validConfirmPassword.result) {
+            setVisible(true)
+            setSnackbarMessage(validConfirmPassword.desc == "" ? "Required Fields Can not be empty" : validConfirmPassword.desc)
+            return false
+        }
+        register(formData)
+    }
 
     return (
         <>
@@ -21,7 +89,7 @@ const Registration = ({ navigation }) => {
                         <View style={{ zIndex: 0, marginLeft: 20 }}>
                             <Text style={{
                                 fontFamily: FONTS.bold,
-                                fontSize: 60, 
+                                fontSize: 60,
                                 marginTop: 150,
                                 marginBottom: 20,
                                 textAlign: "center"
@@ -62,8 +130,8 @@ const Registration = ({ navigation }) => {
                                     />
                                     <TextInput
                                         placeholder='Enter Full Name'
-                                        style={{ flex: 1, color: COLORS.white }}
-                                        onChangeText={() => { }}
+                                        style={{ flex: 1, color: COLORS.primary }}
+                                        onChangeText={(value) => { onChangeName(value) }}
                                     />
                                 </View>
                                 <Text style={{
@@ -72,7 +140,7 @@ const Registration = ({ navigation }) => {
                                     color: COLORS.primary,
                                     margin: SIZES.base
                                 }}>
-                                    Email Address
+                                    Email Address (*)
                                 </Text>
                                 <View style={{
                                     width: "100%",
@@ -81,8 +149,8 @@ const Registration = ({ navigation }) => {
                                     flexDirection: "row",
                                     alignItems: "center",
                                     paddingHorizontal: SIZES.font,
-                                    paddingVertical: SIZES.small - 2
-
+                                    paddingVertical: SIZES.small - 2,
+                                    marginBottom: SIZES.large
                                 }}>
                                     <Image
                                         source={assets.email}
@@ -95,8 +163,8 @@ const Registration = ({ navigation }) => {
                                     />
                                     <TextInput
                                         placeholder='Enter Email Address'
-                                        style={{ flex: 1, color: COLORS.white }}
-                                        onChangeText={() => { }}
+                                        style={{ flex: 1, color: COLORS.primary }}
+                                        onChangeText={(value) => { onChangeEmail(value) }}
                                     />
                                 </View>
                                 <Text style={{
@@ -105,7 +173,7 @@ const Registration = ({ navigation }) => {
                                     color: COLORS.primary,
                                     margin: SIZES.base
                                 }}>
-                                    Contact Number
+                                    Contact Number (*)
                                 </Text>
                                 <View style={{
                                     width: "100%",
@@ -128,8 +196,8 @@ const Registration = ({ navigation }) => {
                                     />
                                     <TextInput
                                         placeholder='Enter Contact Number'
-                                        style={{ flex: 1, color: COLORS.white }}
-                                        onChangeText={() => { }}
+                                        style={{ flex: 1, color: COLORS.primary }}
+                                        onChangeText={(value) => { onChangeContactNumber(value) }}
                                     />
                                 </View>
                                 <Text style={{
@@ -138,7 +206,7 @@ const Registration = ({ navigation }) => {
                                     color: COLORS.primary,
                                     margin: SIZES.base
                                 }}>
-                                    Password
+                                    Password (*)
                                 </Text>
                                 <View style={{
                                     width: "100%",
@@ -161,10 +229,26 @@ const Registration = ({ navigation }) => {
                                     />
                                     <TextInput
                                         placeholder='Enter Password'
-                                        secureTextEntry={true}
-                                        style={{ flex: 1, color: COLORS.white }}
-                                        onChangeText={() => { }}
+                                        secureTextEntry={viewPassword}
+                                        style={{ flex: 1, color: COLORS.primary }}
+                                        onChangeText={(value) => { onChangePassword(value) }}
                                     />
+                                    <TouchableOpacity
+                                        style={{
+                                            backgroundColor: COLORS.white,
+                                            padding: 5,
+                                            borderRadius: 50
+                                        }}
+                                        onPress={() => { setViewPassword((prev) => { return !prev }) }}>
+                                        <Image
+                                            source={viewPassword ? assets.passwordHide : assets.passwordView}
+                                            resizeMode="contain"
+                                            style={{
+                                                height: 20,
+                                                width: 20,
+                                            }}
+                                        />
+                                    </TouchableOpacity>
                                 </View>
                                 <Text style={{
                                     fontFamily: FONTS.bold,
@@ -172,7 +256,7 @@ const Registration = ({ navigation }) => {
                                     color: COLORS.primary,
                                     margin: SIZES.base
                                 }}>
-                                    Confirm Password
+                                    Confirm Password (*)
                                 </Text>
                                 <View style={{
                                     width: "100%",
@@ -196,8 +280,8 @@ const Registration = ({ navigation }) => {
                                     <TextInput
                                         placeholder='Re Enter Password'
                                         secureTextEntry={true}
-                                        style={{ flex: 1, color: COLORS.white }}
-                                        onChangeText={() => { }}
+                                        style={{ flex: 1, color: COLORS.primary }}
+                                        onChangeText={(value) => { onChangeConfirmPassword(value) }}
                                     />
                                 </View>
                             </View>
@@ -243,7 +327,7 @@ const Registration = ({ navigation }) => {
                                         width: '50%'
 
                                     }}
-                                    onPress={() => { register() }}
+                                    onPress={() => { onFormSubmit() }}
                                 >
                                     <Text style={{
                                         fontFamily: FONTS.bold,
@@ -276,6 +360,18 @@ const Registration = ({ navigation }) => {
                             />
                         </View>
                     </View>
+                    <Snackbar
+                        visible={visible}
+                        onDismiss={onDismissSnackBar}
+                        action={{
+                            label: "Dismiss",
+                            onPress: () => {
+                                setVisible(false);
+                            },
+                        }}
+                    >
+                        {snackbarMessage}
+                    </Snackbar>
                 </ScrollView>
             </SafeAreaView >
         </>

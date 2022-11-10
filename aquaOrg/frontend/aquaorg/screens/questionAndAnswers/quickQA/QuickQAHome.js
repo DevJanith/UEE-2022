@@ -1,6 +1,9 @@
-import { View, Text, SafeAreaView, ScrollView } from 'react-native'
 import React from 'react'
+import { SafeAreaView, ScrollView } from 'react-native'
+import { FocusedStatusBar } from '../../../components'
+import { DetailsHeader } from '../../../components/DetailsHeader'
 import FeatureWelcomePage from '../../../components/FeatureWelcomePage'
+import { assets } from '../../../constants'
 
 const QuickQAHome = ({ navigation }) => {
   const FeatureWelcomePageData = {
@@ -32,6 +35,12 @@ const QuickQAHome = ({ navigation }) => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView>
+        <FocusedStatusBar
+          barStyle="dark-content"
+          backgroundColor="transparent"
+          translucent={true}
+        />
+        <DetailsHeader navigation={navigation} image={assets.b7} />
         <FeatureWelcomePage FeatureWelcomePageData={FeatureWelcomePageData} navigation={navigation} />
       </ScrollView>
     </SafeAreaView>

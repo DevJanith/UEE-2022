@@ -38,6 +38,7 @@ import EditEvent from "./screens/events/EditEvent";
 import { QuickAnswer, QuickQAHome, QuickQuestion } from "./screens/questionAndAnswers/quickQA";
 import { Previous, PreviousQAHome } from "./screens/questionAndAnswers/previousQA";
 import { ScoreBoard, ScoreBoardQAHome } from "./screens/questionAndAnswers/scoreBoardQA";
+import { login } from "./api";
 
 import InfoHome from "./screens/Information Management/Home";
 import InfoCategories from "./screens/Information Management/Categories";
@@ -123,9 +124,9 @@ const EventScreens = () => (
   </StackEvent.Navigator>
 );
 
-const QuestionAnswerScreens = () => (
-  <Stack.Navigator initialRouteName="QuestionAndAnswersSrc">
-    <StackEvent.Screen name="QuestionAndAnswersSrc" component={QuestionAndAnswers} options={{ headerShown: false }} />
+const QuestionAnswerScreens = ({ loginSuccessData }) => (
+  <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="QuestionAndAnswersSrc">
+    <Stack.Screen name="QuestionAndAnswersSrc" component={() => <QuestionAndAnswers loginSuccessData={loginSuccessData} />} options={{ headerShown: false }} />
     <Stack.Screen name="QuickQAHome" component={QuickQAHome} options={{ title: "Quick Q & A" }} />
     <Stack.Screen name="QuickQuestion" component={QuickQuestion} options={{ title: "Quick Question" }} />
     <Stack.Screen name="QuickAnswer" component={QuickAnswer} options={{ title: "Quick Answer" }} />
@@ -166,13 +167,37 @@ export default function App() {
   });
 
   const [isLoading, setIsLoading] = useState(true);
-  const [userAuth, setUserAuth] = useState("1233");
+  const [userAuth, setUserAuth] = useState(null);
+  const [loginSuccessData, setLoginSuccessData] = useState()
+  const [loginErrorData, setLoginErrorData] = useState()
+  const [loginIsSuccess, setLoginIsSuccess] = useState(false)
+  const [loginsIsPending, setLoginIsPending] = useState(false)
+  const [loginIsError, setLoginIsError] = useState(false)
 
   const authContext = useMemo(() => {
     return {
-      login: () => {
-        setIsLoading(false);
-        setUserAuth("1234");
+      login: (data) => {
+
+        setIsLoading(true)
+        setLoginIsPending(true)
+        login(data)
+          .then((response) => {
+            console.log(response.data.result);
+            setLoginSuccessData(response.data.result)
+            setUserAuth(response.data.token);
+            setIsLoading(false)
+            setLoginIsPending(false)
+            setLoginIsSuccess(true)
+            alert("login Success")
+          })
+          .catch((err) => {
+            console.log(err);
+            setLoginErrorData(err.response)
+            setIsLoading(false)
+            setLoginIsPending(false)
+            setLoginIsError(true)
+            alert("login Fail")
+          });
       },
       register: () => {
         setIsLoading(false);
@@ -230,7 +255,7 @@ export default function App() {
             />
             <Drawer.Screen
               name="QuestionAndAnswers"
-              component={QuestionAnswerScreens}
+              component={() => <QuestionAnswerScreens loginSuccessData={loginSuccessData} />}
               options={({ route }) => {
                 // console.log(getFocusedRouteNameFromRoute(route));
                 const routeName =
@@ -245,7 +270,7 @@ export default function App() {
                   routeName == "Previous" ||
                   routeName == "ScoreBoard"
                 ) return { headerShown: false }
-                return { title: "Question &  ANswers" }
+                return { title: "Question &  Answers" }
               }}
             />
             <Drawer.Screen
