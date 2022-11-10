@@ -92,7 +92,6 @@ export const getUserEvents = async (req, res) => {
 };
 
 //update
-
 export const updateEvent = async (req, res) => {
   const { id } = req.params;
   const { user, name, organizer, date, description, tags } = req.body;
@@ -113,7 +112,68 @@ export const updateEvent = async (req, res) => {
       updatedAt,
     };
     const update = await Event.findByIdAndUpdate(id, updateEvent);
-    res.status(200).send({ message: "Feedback Details Updated" });
+    res.status(200).send({ message: "Event Details Updated" });
+  } catch (error) {
+    res.status(404);
+    res.json({ message: error.message });
+  }
+};
+
+//add memeber
+export const addMember = async (req, res) => {
+  const { id } = req.params;
+  const { member } = req.body;
+  console.log(member);
+
+  let updatedAt = new Date().toLocaleString({ timeZone: "Asia/Colombo" });
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).send(`No Event with id: ${id}`);
+    }
+    const event = await Event.findById(id);
+
+    let existingMembers = event.members;
+
+    existingMembers.push(member);
+
+    let members = existingMembers;
+
+    const updateEvent = {
+      members,
+    };
+    const update = await Event.findByIdAndUpdate(id, updateEvent);
+    res.status(200).send({ message: "Member added to Event" });
+  } catch (error) {
+    res.status(404);
+    res.json({ message: error.message });
+  }
+};
+
+//add partocopant
+export const addParticipant = async (req, res) => {
+  const { id } = req.params;
+  const { participant } = req.body;
+
+  let updatedAt = new Date().toLocaleString({ timeZone: "Asia/Colombo" });
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).send(`No Event with id: ${id}`);
+    }
+    const event = await Event.findById(id);
+
+    let axistingParticipants = event.participants;
+
+    axistingParticipants.push(participant);
+
+    let participants = axistingParticipants;
+
+    const updateEvent = {
+      participants,
+    };
+    const update = await Event.findByIdAndUpdate(id, updateEvent);
+    res.status(200).send({ message: "Member added to Event" });
   } catch (error) {
     res.status(404);
     res.json({ message: error.message });

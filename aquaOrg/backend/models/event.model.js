@@ -26,6 +26,12 @@ const eventSchema = mongoose.Schema({
     type: Date,
     default: new Date(),
   },
+  members: {
+    type: Array,
+  },
+  participants: {
+    type: Array,
+  },
 });
 
 const Event = mongoose.model("Event", eventSchema);
