@@ -132,6 +132,9 @@ const Event = ({ navigation }) => {
                     { top: 15, backgroundColor: "#015C92", height: 100 },
                   ]}
                   elevation={5}
+                  onPress={() => {
+                    navigation.navigate("EventInfo");
+                  }}
                 >
                   <Card.Content
                     style={{

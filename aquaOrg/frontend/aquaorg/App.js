@@ -35,6 +35,7 @@ import InterestedEvents from "./screens/events/InterestedEvents";
 import ViewEvent from "./screens/events/ViewEvent";
 import ViewEventUser from "./screens/events/ViewEventUser";
 import EditEvent from "./screens/events/EditEvent";
+import EventInfo from "./screens/events/EventInfo";
 
 //internal styling
 const theme = {
@@ -103,6 +104,11 @@ const EventScreens = () => (
       name="EditEvent"
       component={EditEvent}
       options={{ title: "Edit Event" }}
+    />
+    <StackEvent.Screen
+      name="EventInfo"
+      component={EventInfo}
+      options={{ title: "About Events" }}
     />
   </StackEvent.Navigator>
 );
@@ -175,7 +181,8 @@ export default function App() {
                   routeName == "InterestedEvents" ||
                   routeName == "ViewEvent" ||
                   routeName == "ViewEventUser" ||
-                  routeName == "EditEvent"
+                  routeName == "EditEvent" ||
+                  routeName == "EventInfo"
                 )
                   return { headerShown: false };
               }}

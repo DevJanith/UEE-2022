@@ -150,11 +150,10 @@ export const addMember = async (req, res) => {
   }
 };
 
-//add memeber
-export const addOrganizer = async (req, res) => {
+//add partocopant
+export const addParticipant = async (req, res) => {
   const { id } = req.params;
-  const { organizer } = req.body;
-  console.log(organizer);
+  const { participant } = req.body;
 
   let updatedAt = new Date().toLocaleString({ timeZone: "Asia/Colombo" });
 
@@ -164,14 +163,14 @@ export const addOrganizer = async (req, res) => {
     }
     const event = await Event.findById(id);
 
-    let existingOrganizers = event.organizers;
+    let axistingParticipants = event.participants;
 
-    existingOrganizers.push(organizer);
+    axistingParticipants.push(participant);
 
-    let organizers = existingOrganizers;
+    let participants = axistingParticipants;
 
     const updateEvent = {
-      organizers,
+      participants,
     };
     const update = await Event.findByIdAndUpdate(id, updateEvent);
     res.status(200).send({ message: "Member added to Event" });

@@ -28,6 +28,12 @@ const AddEvent = ({ navigation }) => {
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // validations
+  const [checkValidaEventName, setCheckValidEventName] = useState(false);
+  const [checkValidaOrganizer, setCheckValidOrganizer] = useState(false);
+  const [checkValidaDate, setCheckValidDate] = useState(false);
+  const [checkValidaDescription, setCheckValidDescription] = useState(false);
+
   const [tag, setTag] = useState();
 
   const [date, setDate] = useState(new Date());
@@ -74,39 +80,90 @@ const AddEvent = ({ navigation }) => {
   const onDismissSnackBar = () => setVisible(false);
 
   const SubmitEvent = () => {
-    setLoading(true);
-    // get this user id from login
-    let userID = 1;
-    const data = {
-      user: userID,
-      name: eventName,
-      organizer: oraganizer,
-      date: eventDate,
-      description: description,
-      tags: tags,
-    };
+    handleCheckDate(eventDate);
+    handleCheckEventName(eventName);
+    handleCheckDescription(description);
+    handleCheckOrganizer(oraganizer);
 
-    console.log(data);
-    axios
-      .post(baseURL + "/aqua-org/events", data)
-      .then((response) => {
-        setLoading(false);
-        if (response.status == 200) {
+    console.log(checkValidaEventName);
+
+    if (eventName && oraganizer && eventDate && description) {
+      setLoading(true);
+      // get this user id from login
+      let userID = 1;
+      const data = {
+        user: userID,
+        name: eventName,
+        organizer: oraganizer,
+        date: eventDate,
+        description: description,
+        tags: tags,
+      };
+
+      console.log(data);
+      axios
+        .post(baseURL + "/aqua-org/events", data)
+        .then((response) => {
+          setLoading(false);
+          if (response.status == 200) {
+            setVisible(true);
+            setSnackbarMessage("Event Added Succsesfully!");
+            navigation.navigate("YourEvents", { reloadVal: Math.random() });
+          } else {
+            setVisible(true);
+            setSnackbarMessage("Failed to add Event.");
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.log(err);
           setVisible(true);
-          setSnackbarMessage("Event Added Succsesfully!");
-          navigation.navigate("YourEvents", { reloadVal: true });
-        } else {
-          setVisible(true);
-          setSnackbarMessage("Failed to add Event.");
-        }
-      })
-      .catch((err) => {
-        setLoading(false);
-        console.log(err);
-        setVisible(true);
-        setSnackbarMessage("Something went wrong!");
-      });
+          setSnackbarMessage("Something went wrong!");
+        });
+    } else {
+      if (!eventName) {
+        setCheckValidEventName(true);
+      }
+      if (!eventDate) {
+        setCheckValidDate(true);
+      }
+      if (!oraganizer) {
+        setCheckValidOrganizer(true);
+      }
+      if (!description) {
+        setCheckValidDescription(true);
+      }
+    }
   };
+
+  function handleCheckEventName(text) {
+    if (text) {
+      setCheckValidEventName(false);
+    } else {
+      setCheckValidEventName(true);
+    }
+  }
+  function handleCheckOrganizer(text) {
+    if (text) {
+      setCheckValidOrganizer(false);
+    } else {
+      setCheckValidOrganizer(true);
+    }
+  }
+  function handleCheckDate(text) {
+    if (text) {
+      setCheckValidDate(false);
+    } else {
+      setCheckValidDate(true);
+    }
+  }
+  function handleCheckDescription(text) {
+    if (text) {
+      setCheckValidDescription(false);
+    } else {
+      setCheckValidDescription(true);
+    }
+  }
   return (
     <SafeAreaView>
       <ScrollView>
@@ -117,16 +174,31 @@ const AddEvent = ({ navigation }) => {
             label="Enter Event Name"
             style={styles.inputField}
             value={eventName}
-            onChangeText={(text) => setEventName(text)}
+            onChangeText={(text) => {
+              setEventName(text);
+              handleCheckEventName(text);
+            }}
           />
+          {checkValidaEventName ? (
+            <Text style={styles.textFailed}>*Event Name field is required</Text>
+          ) : (
+            <Text style={styles.textFailed}></Text>
+          )}
           <TextInput
             mode="outlined"
             label="Enter Organizer Name"
             activeOutlineColor="#015C92"
             value={oraganizer}
             style={styles.inputField}
-            onChangeText={(text) => setOrganizer(text)}
+            onChangeText={(text) => {
+              setOrganizer(text), handleCheckOrganizer(text);
+            }}
           />
+          {checkValidaOrganizer ? (
+            <Text style={styles.textFailed}>*Organizer field is required</Text>
+          ) : (
+            <Text style={styles.textFailed}></Text>
+          )}
         </View>
 
         <View style={styles.inputContainer}>
@@ -187,9 +259,15 @@ const AddEvent = ({ navigation }) => {
           value={eventDate}
           style={styles.inputField}
           disabled={true}
-          onChangeText={(text) => setEventDate(text)}
+          onChangeText={(text) => {
+            setEventDate(text);
+          }}
         />
-
+        {/* {checkValidaDate ? (
+          <Text style={styles.textFailed}>*Event date is required</Text>
+        ) : (
+          <Text style={styles.textFailed}></Text>
+        )} */}
         <TextInput
           mode="outlined"
           multiline={true}
@@ -197,8 +275,16 @@ const AddEvent = ({ navigation }) => {
           label="Enter Description about Event... "
           style={styles.inputField}
           value={description}
-          onChangeText={(text) => setDescription(text)}
+          onChangeText={(text) => {
+            setDescription(text);
+            handleCheckDescription(text);
+          }}
         />
+        {checkValidaDescription ? (
+          <Text style={styles.textFailed}>*Event description is required</Text>
+        ) : (
+          <Text style={styles.textFailed}></Text>
+        )}
         <View
           style={{
             flexDirection: "row",
@@ -246,6 +332,7 @@ const AddEvent = ({ navigation }) => {
         >
           <Text style={styles.btnText}> Submit Event</Text>
         </TouchableOpacity>
+
         <Snackbar
           visible={visible}
           onDismiss={onDismissSnackBar}
@@ -312,5 +399,10 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "white",
     marginTop: 7,
+  },
+  textFailed: {
+    marginTop: -10,
+    color: "#D10000",
+    fontWeight: "500",
   },
 });

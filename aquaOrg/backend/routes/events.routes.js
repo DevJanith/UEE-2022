@@ -8,7 +8,7 @@ import {
   getUserEvents,
   updateEvent,
   addMember,
-  addOrganizer,
+  addParticipant,
 } from "../controllers/event.controller.js";
 
 const router = express.Router();
@@ -20,6 +20,6 @@ router.delete("/:id", deleteEvent);
 router.put("/:id", updateEvent);
 router.get("/user/:id", getUserEvents);
 router.put("/member/:id", addMember);
-router.put("/organizer:id", addOrganizer);
+router.put("/organizer:id", addParticipant);
 
 export default router;

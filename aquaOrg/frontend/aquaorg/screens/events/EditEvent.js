@@ -29,6 +29,12 @@ const EditEvent = ({ route, navigation }) => {
   const [tags, setTags] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // validations
+  const [checkValidaEventName, setCheckValidEventName] = useState(false);
+  const [checkValidaOrganizer, setCheckValidOrganizer] = useState(false);
+  const [checkValidaDate, setCheckValidDate] = useState(false);
+  const [checkValidaDescription, setCheckValidDescription] = useState(false);
+
   const [tag, setTag] = useState();
 
   const [date, setDate] = useState(new Date());
@@ -37,6 +43,11 @@ const EditEvent = ({ route, navigation }) => {
   const [text, setText] = useState("Empty");
   const [visible, setVisible] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
+
+  const [seed, setSeed] = useState(1);
+  const loadTags = () => {
+    setSeed(Math.random());
+  };
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -64,11 +75,14 @@ const EditEvent = ({ route, navigation }) => {
   function addToTags() {
     let existingTags = tags;
 
-    setTag("");
+    if (tag) {
+      setTag("");
 
-    existingTags.push(tag);
-    setTags(existingTags);
-    console.log(existingTags);
+      existingTags.push(tag);
+      setTags(existingTags);
+      console.log(existingTags);
+      loadTags();
+    }
   }
   const onDismissSnackBar = () => setVisible(false);
 
@@ -81,39 +95,88 @@ const EditEvent = ({ route, navigation }) => {
   }, []);
 
   const updateEvent = () => {
-    setLoading(true);
-    // get this user id from login
-    let userID = 1;
-    const data = {
-      user: userID,
-      name: eventName,
-      oraganizer: oraganizer,
-      date: eventDate,
-      description: description,
-      tags: tags,
-    };
+    handleCheckDate(eventDate);
+    handleCheckEventName(eventName);
+    handleCheckDescription(description);
+    handleCheckOrganizer(oraganizer);
+    if (eventName && oraganizer && eventDate && description) {
+      setLoading(true);
+      // get this user id from login
+      let userID = 1;
+      const data = {
+        user: userID,
+        name: eventName,
+        organizer: oraganizer,
+        date: eventDate,
+        description: description,
+        tags: tags,
+      };
 
-    console.log(data);
-    axios
-      .put(baseURL + "/aqua-org/events/" + item._id, data)
-      .then((response) => {
-        setLoading(false);
-        if (response.status == 200) {
+      // console.log(data);
+      axios
+        .put(baseURL + "/aqua-org/events/" + item._id, data)
+        .then((response) => {
+          setLoading(false);
+          if (response.status == 200) {
+            setVisible(true);
+            setSnackbarMessage("Event Updated Succsesfully!");
+            navigation.navigate("YourEvents", { reloadVal: Math.random() });
+          } else {
+            setVisible(true);
+            setSnackbarMessage("Failed to Update Event.");
+          }
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.log(err);
           setVisible(true);
-          setSnackbarMessage("Event Updated Succsesfully!");
-          navigation.navigate("YourEvents", { reloadVal: true });
-        } else {
-          setVisible(true);
-          setSnackbarMessage("Failed to Update Event.");
-        }
-      })
-      .catch((err) => {
-        setLoading(false);
-        console.log(err);
-        setVisible(true);
-        setSnackbarMessage("Something went wrong!");
-      });
+          setSnackbarMessage("Something went wrong!");
+        });
+    } else {
+      if (!eventName) {
+        setCheckValidEventName(true);
+      }
+      if (!eventDate) {
+        setCheckValidDate(true);
+      }
+      if (!oraganizer) {
+        setCheckValidOrganizer(true);
+      }
+      if (!description) {
+        setCheckValidDescription(true);
+      }
+    }
   };
+
+  // validations
+  function handleCheckEventName(text) {
+    if (text) {
+      setCheckValidEventName(false);
+    } else {
+      setCheckValidEventName(true);
+    }
+  }
+  function handleCheckOrganizer(text) {
+    if (text) {
+      setCheckValidOrganizer(false);
+    } else {
+      setCheckValidOrganizer(true);
+    }
+  }
+  function handleCheckDate(text) {
+    if (text) {
+      setCheckValidDate(false);
+    } else {
+      setCheckValidDate(true);
+    }
+  }
+  function handleCheckDescription(text) {
+    if (text) {
+      setCheckValidDescription(false);
+    } else {
+      setCheckValidDescription(true);
+    }
+  }
   return (
     <SafeAreaView>
       <ScrollView>
@@ -124,17 +187,33 @@ const EditEvent = ({ route, navigation }) => {
             label="Enter Event Name"
             style={styles.inputField}
             value={eventName}
-            onChangeText={(text) => setEventName(text)}
+            onChangeText={(text) => {
+              setEventName(text);
+              handleCheckEventName(text);
+            }}
           />
+          {checkValidaEventName ? (
+            <Text style={styles.textFailed}>*Event Name field is required</Text>
+          ) : (
+            <Text style={styles.textFailed}></Text>
+          )}
           <TextInput
             mode="outlined"
             label="Enter Organizer Name"
             activeOutlineColor="#015C92"
             value={oraganizer}
             style={styles.inputField}
-            onChangeText={(text) => setOrganizer(text)}
+            onChangeText={(text) => {
+              setOrganizer(text);
+              handleCheckOrganizer(text);
+            }}
           />
         </View>
+        {checkValidaOrganizer ? (
+          <Text style={styles.textFailed}>*Organizer field is required</Text>
+        ) : (
+          <Text style={styles.textFailed}></Text>
+        )}
 
         <View style={styles.inputContainer}>
           <Text style={styles.textField}>Select Date and Time</Text>
@@ -204,8 +283,16 @@ const EditEvent = ({ route, navigation }) => {
           label="Enter Description about Event... "
           style={styles.inputField}
           value={description}
-          onChangeText={(text) => setDescription(text)}
+          onChangeText={(text) => {
+            setDescription(text);
+            handleCheckDescription(text);
+          }}
         />
+        {checkValidaDescription ? (
+          <Text style={styles.textFailed}>*Event description is required</Text>
+        ) : (
+          <Text style={styles.textFailed}></Text>
+        )}
         <View
           style={{
             flexDirection: "row",
@@ -230,13 +317,17 @@ const EditEvent = ({ route, navigation }) => {
             onPress={() => addToTags()}
           />
         </View>
-        <View style={{ flexDirection: "row", marginTop: 2, marginBottom: 10 }}>
+        <View
+          style={{ flexDirection: "row", marginTop: 2, marginBottom: 10 }}
+          key={seed}
+        >
           {tags.map((item, key) => (
             <Chip
               onClose={() => {
                 console.log("test test");
                 const index = tags.indexOf(item);
                 tags.splice(index, 1);
+                loadTags();
               }}
               textStyle={{
                 fontWeight: "800",
@@ -324,5 +415,10 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     color: "white",
     marginTop: 7,
+  },
+  textFailed: {
+    marginTop: -10,
+    color: "#D10000",
+    fontWeight: "400",
   },
 });
