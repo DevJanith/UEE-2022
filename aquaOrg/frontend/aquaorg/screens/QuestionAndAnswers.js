@@ -1,13 +1,20 @@
-import React, { useRef } from 'react'
-import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native'
-import FocusedStatusBar from '../components/FocusedStatusBar'
-import { assets, COLORS, FONTS, SIZES } from '../constants'
+import React, { useContext, useEffect, useRef } from 'react';
+import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import RBSheet from "react-native-raw-bottom-sheet";
+import FocusedStatusBar from '../components/FocusedStatusBar';
+import { assets, COLORS, FONTS, SIZES } from '../constants';
+import { AuthContext } from '../context/context';
 
-const QuestionAndAnswers = ({ navigation, loginSuccessData }) => {
+const QuestionAndAnswers = ({ navigation }) => {
+  const { userDetails } = useContext(AuthContext)
+
+
+  useEffect(() => {
+    console.log("Q&A +=====================", userDetails)
+  }, [])
+
+
   const refRBSheet = useRef();
-
-  console.log(">>>>>>>>>>>>>>> here login user      -- ", loginSuccessData);
   return (
     <SafeAreaView
       style={{

@@ -35,9 +35,20 @@ import InterestedEvents from "./screens/events/InterestedEvents";
 import ViewEvent from "./screens/events/ViewEvent";
 import ViewEventUser from "./screens/events/ViewEventUser";
 import EditEvent from "./screens/events/EditEvent";
-import { QuickAnswer, QuickQAHome, QuickQuestion } from "./screens/questionAndAnswers/quickQA";
-import { Previous, PreviousQAHome } from "./screens/questionAndAnswers/previousQA";
-import { ScoreBoard, ScoreBoardQAHome } from "./screens/questionAndAnswers/scoreBoardQA";
+import EventInfo from "./screens/events/EventInfo";
+import {
+  QuickAnswer,
+  QuickQAHome,
+  QuickQuestion,
+} from "./screens/questionAndAnswers/quickQA";
+import {
+  Previous,
+  PreviousQAHome,
+} from "./screens/questionAndAnswers/previousQA";
+import {
+  ScoreBoard,
+  ScoreBoardQAHome,
+} from "./screens/questionAndAnswers/scoreBoardQA";
 import { login } from "./api";
 
 import InfoHome from "./screens/Information Management/Home";
@@ -119,14 +130,19 @@ const EventScreens = () => (
     <StackEvent.Screen
       name="EditEvent"
       component={EditEvent}
-      options={{ title: "Event" }}
+      options={{ title: "Edit Event" }}
+    />
+    <StackEvent.Screen
+      name="EventInfo"
+      component={EventInfo}
+      options={{ title: "About Events" }}
     />
   </StackEvent.Navigator>
 );
 
 const QuestionAnswerScreens = ({ loginSuccessData }) => (
   <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="QuestionAndAnswersSrc">
-    <Stack.Screen name="QuestionAndAnswersSrc" component={() => <QuestionAndAnswers loginSuccessData={loginSuccessData} />} options={{ headerShown: false }} />
+    <Stack.Screen name="QuestionAndAnswersSrc" component={QuestionAndAnswers} options={{ headerShown: false }} />
     <Stack.Screen name="QuickQAHome" component={QuickQAHome} options={{ title: "Quick Q & A" }} />
     <Stack.Screen name="QuickQuestion" component={QuickQuestion} options={{ title: "Quick Question" }} />
     <Stack.Screen name="QuickAnswer" component={QuickAnswer} options={{ title: "Quick Answer" }} />
@@ -135,7 +151,7 @@ const QuestionAnswerScreens = ({ loginSuccessData }) => (
     <Stack.Screen name="ScoreBoardQAHome" component={ScoreBoardQAHome} options={{ title: "Scoreboard Q & A" }} />
     <Stack.Screen name="ScoreBoard" component={ScoreBoard} options={{ title: "Scoreboard" }} />
   </Stack.Navigator>
-)
+);
 
 const InformationScreens = () => (
   <Stack.Navigator initialRouteName="InformationSrc">
@@ -168,35 +184,34 @@ export default function App() {
 
   const [isLoading, setIsLoading] = useState(true);
   const [userAuth, setUserAuth] = useState(null);
-  const [loginSuccessData, setLoginSuccessData] = useState()
-  const [loginErrorData, setLoginErrorData] = useState()
-  const [loginIsSuccess, setLoginIsSuccess] = useState(false)
-  const [loginsIsPending, setLoginIsPending] = useState(false)
-  const [loginIsError, setLoginIsError] = useState(false)
+  const [loginSuccessData, setLoginSuccessData] = useState();
+  const [loginErrorData, setLoginErrorData] = useState();
+  const [loginIsSuccess, setLoginIsSuccess] = useState(false);
+  const [loginsIsPending, setLoginIsPending] = useState(false);
+  const [loginIsError, setLoginIsError] = useState(false);
 
   const authContext = useMemo(() => {
     return {
       login: (data) => {
-
-        setIsLoading(true)
-        setLoginIsPending(true)
+        setIsLoading(true);
+        setLoginIsPending(true);
         login(data)
           .then((response) => {
             console.log(response.data.result);
-            setLoginSuccessData(response.data.result)
+            setLoginSuccessData(response.data.result);
             setUserAuth(response.data.token);
-            setIsLoading(false)
-            setLoginIsPending(false)
-            setLoginIsSuccess(true)
-            alert("login Success")
+            setIsLoading(false);
+            setLoginIsPending(false);
+            setLoginIsSuccess(true);
+            alert("login Success");
           })
           .catch((err) => {
             console.log(err);
-            setLoginErrorData(err.response)
-            setIsLoading(false)
-            setLoginIsPending(false)
-            setLoginIsError(true)
-            alert("login Fail")
+            setLoginErrorData(err.response);
+            setIsLoading(false);
+            setLoginIsPending(false);
+            setLoginIsError(true);
+            alert("login Fail");
           });
       },
       register: () => {
@@ -207,8 +222,9 @@ export default function App() {
         setIsLoading(false);
         setUserAuth(null);
       },
+      userDetails: loginSuccessData
     };
-  }, []);
+  }, [loginSuccessData]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -255,11 +271,12 @@ export default function App() {
             />
             <Drawer.Screen
               name="QuestionAndAnswers"
-              component={() => <QuestionAnswerScreens loginSuccessData={loginSuccessData} />}
+              component={QuestionAnswerScreens}
               options={({ route }) => {
                 // console.log(getFocusedRouteNameFromRoute(route));
                 const routeName =
-                  getFocusedRouteNameFromRoute(route) ?? "QuestionAndAnswersSrc";
+                  getFocusedRouteNameFromRoute(route) ??
+                  "QuestionAndAnswersSrc";
                 if (typeof routeName == "undefined") return;
                 if (
                   routeName == "QuickQAHome" ||
@@ -269,12 +286,13 @@ export default function App() {
                   routeName == "QuickAnswer" ||
                   routeName == "Previous" ||
                   routeName == "ScoreBoard"
-                ) return { headerShown: false }
-                return { title: "Question &  Answers" }
+                )
+                  return { headerShown: false };
+                return { title: "Question &  Answers" };
               }}
             />
             <Drawer.Screen
-              name="Event"
+              name="Events"
               component={EventScreens}
               options={({ route }) => {
                 // console.log("test", getFocusedRouteNameFromRoute(route));
@@ -288,7 +306,8 @@ export default function App() {
                   routeName == "InterestedEvents" ||
                   routeName == "ViewEvent" ||
                   routeName == "ViewEventUser" ||
-                  routeName == "EditEvent"
+                  routeName == "EditEvent" ||
+                  routeName == "EventInfo"
                 )
                   return { headerShown: false };
               }}
