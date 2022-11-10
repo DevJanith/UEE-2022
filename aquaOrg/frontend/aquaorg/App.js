@@ -39,6 +39,8 @@ import { QuickAnswer, QuickQAHome, QuickQuestion } from "./screens/questionAndAn
 import { Previous, PreviousQAHome } from "./screens/questionAndAnswers/previousQA";
 import { ScoreBoard, ScoreBoardQAHome } from "./screens/questionAndAnswers/scoreBoardQA";
 
+import AddDonationMethod from "./screens/Donation/AddDonationMethod";
+
 //internal styling
 const theme = {
   ...DefaultTheme,
@@ -121,6 +123,19 @@ const QuestionAnswerScreens = () => (
     <Stack.Screen name="ScoreBoardQAHome" component={ScoreBoardQAHome} options={{ title: "Scoreboard Q & A" }} />
     <Stack.Screen name="ScoreBoard" component={ScoreBoard} options={{ title: "Scoreboard" }} />
   </Stack.Navigator>
+)
+
+const DonationScreens = () => (
+  <Stack.Navigator initialRouteName="DonationSrc">
+     <StackEvent.Screen name="AddDonationMethod" component={Donation} options={{ title: "AddDonationMethod" }} />
+{/* //     <Stack.Screen name="QuickQAHome" component={QuickQAHome} options={{ title: "Quick Q & A" }} />
+//     <Stack.Screen name="QuickQuestion" component={QuickQuestion} options={{ title: "Quick Question" }} />
+//     <Stack.Screen name="QuickAnswer" component={QuickAnswer} options={{ title: "Quick Answer" }} />
+//     <Stack.Screen name="PreviousQAHome" component={PreviousQAHome} options={{ title: "Previous Q & A" }} />
+//     <Stack.Screen name="Previous" component={Previous} options={{ title: "Previous" }} />
+//     <Stack.Screen name="ScoreBoardQAHome" component={ScoreBoardQAHome} options={{ title: "Scoreboard Q & A" }} />
+//     <Stack.Screen name="ScoreBoard" component={ScoreBoard} options={{ title: "Scoreboard" }} /> */}
+//   </Stack.Navigator>
 )
 
 export default function App() {
