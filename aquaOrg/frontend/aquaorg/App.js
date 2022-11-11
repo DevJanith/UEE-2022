@@ -40,7 +40,7 @@ import EventInfo from "./screens/events/EventInfo";
 import { QuickAnswer, QuickQAEnd, QuickQAHome, QuickQuestion } from "./screens/questionAndAnswers/quickQA";
 import { Previous, PreviousQAHome } from "./screens/questionAndAnswers/previousQA";
 import { ScoreBoard, ScoreBoardQAHome } from "./screens/questionAndAnswers/scoreBoardQA";
-import { login } from "./api";
+import { login, registration } from "./api";
 
 import InfoHome from "./screens/Information Management/Home";
 import InfoCategories from "./screens/Information Management/Categories";
@@ -183,6 +183,12 @@ export default function App() {
   const [loginsIsPending, setLoginIsPending] = useState(false);
   const [loginIsError, setLoginIsError] = useState(false);
 
+  const [registrationSuccessData, setRegistrationSuccessData] = useState();
+  const [registrationErrorData, setRegistrationErrorData] = useState();
+  const [registrationIsSuccess, setRegistrationIsSuccess] = useState(false);
+  const [registrationsIsPending, setRegistrationIsPending] = useState(false);
+  const [registrationIsError, setRegistrationIsError] = useState(false);
+
   const authContext = useMemo(() => {
     return {
       login: (data) => {
@@ -207,9 +213,28 @@ export default function App() {
             alert("login Fail");
           });
       },
-      register: () => {
-        setIsLoading(false);
-        setUserAuth("1234");
+      register: (data) => {
+        console.log(data);
+        setIsLoading(true);
+        setRegistrationIsPending(true);
+        registration(data)
+          .then((response) => {
+            console.log(response.data.result);
+            setRegistrationSuccessData(response.data.result);
+            setUserAuth(response.data.token);
+            setIsLoading(false);
+            setRegistrationIsPending(false);
+            setRegistrationIsSuccess(true);
+            alert("Registration Success");
+          })
+          .catch((err) => {
+            console.log(err);
+            setRegistrationErrorData(err.response);
+            setIsLoading(false);
+            setRegistrationIsPending(false);
+            setRegistrationIsError(true);
+            alert("Registration Fail");
+          });
       },
       logout: () => {
         setIsLoading(false);
@@ -224,6 +249,10 @@ export default function App() {
       setIsLoading(false);
     }, 1000);
   }, []);
+
+  if (isLoading) {
+    return <Splash />;
+  }
 
   if (isLoading) {
     return <Splash />;
@@ -307,7 +336,7 @@ export default function App() {
               }}
             />
             <Drawer.Screen name="Donation" component={Donation} />
-            <Drawer.Screen name="Profile" component={Profile} options={{ title: "User Profile" }} /> 
+            <Drawer.Screen name="Profile" component={Profile} options={{ title: "User Profile" }} />
             <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "Log Out" }} />
           </Drawer.Navigator>
         ) : (
