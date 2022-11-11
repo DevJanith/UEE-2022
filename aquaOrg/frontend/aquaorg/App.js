@@ -357,7 +357,7 @@ export default function App() {
             />
 
             {/* <Drawer.Screen name="Donation" component={Donation} /> */}
-            <Drawer.Screen name="Donation" component={Donation} />
+            {/* <Drawer.Screen name="Donation" component={Donation} /> */}
             <Drawer.Screen name="Profile" component={Profile} options={{ title: "User Profile" }} />
             <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "Log Out" }} />
           </Drawer.Navigator>
