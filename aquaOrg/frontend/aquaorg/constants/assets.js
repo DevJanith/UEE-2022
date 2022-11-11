@@ -15,6 +15,9 @@ import your_list from "../assets/icons/your_list.png";
 import learning from "../assets/icons/learning.png";
 import passwordView from "../assets/icons/passwordView.png";
 import passwordHide from "../assets/icons/passwordHide.png";
+import edit from "../assets/icons/edit.png";
+import clarification from "../assets/icons/clarification.png";
+import answer from "../assets/icons/answer.png";
 
 import logo from "../assets/images/logo.png";
 import nft01 from "../assets/images/nft01.png";
@@ -33,6 +36,10 @@ import b5 from "../assets/images/b5.png";
 import b6 from "../assets/images/b6.jpg";
 import b7 from "../assets/images/b7.jpg";
 import b8 from "../assets/images/b8.jpg";
+import b9 from "../assets/images/Info/sea_animal_bg.png";
+import go from "../assets/images/Info/right_arrow_2.png";
+import b10 from "../assets/images/b10.jpg";
+import b11 from "../assets/images/b11.jpg";
 import menu1 from "../assets/images/menu1.png";
 import menu2 from "../assets/images/menu2.png";
 import menu3 from "../assets/images/menu3.png";
@@ -61,6 +68,9 @@ export default {
   learning,
   passwordView,
   passwordHide,
+  edit,
+  clarification,
+  answer,
 
   logo,
   nft01,
@@ -84,8 +94,13 @@ export default {
   b6,
   b7,
   b8,
+  b9,
+  b10,
+  b11,
   menu1,
   menu2,
   menu3,
   menu4,
+
+  go
 };

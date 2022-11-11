@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   TextInput,
@@ -19,8 +19,11 @@ import {
 import DateTimePicker from "@react-native-community/datetimepicker";
 import axios from "axios";
 import baseURL from "../../store";
+import { AuthContext } from "../../context/context";
 
 const EditEvent = ({ route, navigation }) => {
+  const { userDetails } = useContext(AuthContext);
+
   const { item } = route.params;
   const [eventName, setEventName] = useState();
   const [oraganizer, setOrganizer] = useState();
@@ -102,7 +105,7 @@ const EditEvent = ({ route, navigation }) => {
     if (eventName && oraganizer && eventDate && description) {
       setLoading(true);
       // get this user id from login
-      let userID = 1;
+      let userID = userDetails._id;
       const data = {
         user: userID,
         name: eventName,
