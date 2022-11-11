@@ -102,9 +102,25 @@ const Event = ({ navigation }) => {
                       }}
                     >
                       <Card.Content>
-                        <Title>{item.name}</Title>
-                        <Paragraph>
+                        <Title
+                          ellipsizeMode="tail"
+                          numberOfLines={1}
+                          style={{
+                            maxWidth: 130,
+                          }}
+                        >
+                          {item.name}
+                        </Title>
+                        <Paragraph
+                          ellipsizeMode="tail"
+                          numberOfLines={1}
+                          style={{
+                            maxWidth: 130,
+                          }}
+                        >
                           <Text
+                            ellipsizeMode="tail"
+                            numberOfLines={1}
                             style={{
                               fontWeight: "bold",
                             }}
