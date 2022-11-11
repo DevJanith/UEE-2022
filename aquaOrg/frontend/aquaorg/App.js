@@ -53,6 +53,7 @@ import BlueWhaleExplore from "./screens/Information Management/BlueWhale/Explore
 
 import AddInfoHome from "./screens/Information Management/UserAddInfo/WantAddInfo";
 import AddInfoCreate from "./screens/Information Management/UserAddInfo/AddInfo_SeaAnimal";
+import LogOut from "./screens/auth/LogOut";
 
 
 //internal styling
@@ -305,6 +306,7 @@ export default function App() {
             />
             <Drawer.Screen name="Donation" component={Donation} />
             <Drawer.Screen name="Profile" component={Profile} options={{ title: "User Profile" }} />
+            <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "Log Out" }} />
           </Drawer.Navigator>
         ) : (
           <Stack.Navigator
