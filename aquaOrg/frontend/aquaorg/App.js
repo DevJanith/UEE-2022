@@ -64,7 +64,11 @@ import AddInfoHome from "./screens/Information Management/UserAddInfo/WantAddInf
 import AddInfoCreate from "./screens/Information Management/UserAddInfo/AddInfo_SeaAnimal";
 
 
-import AddDonationMethod from "./screens/Donation/AddDonationMethod";
+import AddDonation from "./screens/DonationManagement/AddDonation";
+import RecurringDonation from "./screens/DonationManagement/RecurringDonation";
+import OneTimeDonation from "./screens/DonationManagement/OneTimeDonation";
+import AddDetails from "./screens/DonationManagement/AddDetails";
+
 
 //internal styling
 const theme = {
@@ -177,15 +181,14 @@ const InformationScreens = () => (
 
 const DonationScreens = () => (
   <Stack.Navigator initialRouteName="DonationSrc">
-     <StackEvent.Screen name="AddDonationMethod" component={Donation} options={{ title: "AddDonationMethod" }} />
-{/* //     <Stack.Screen name="QuickQAHome" component={QuickQAHome} options={{ title: "Quick Q & A" }} />
-//     <Stack.Screen name="QuickQuestion" component={QuickQuestion} options={{ title: "Quick Question" }} />
-//     <Stack.Screen name="QuickAnswer" component={QuickAnswer} options={{ title: "Quick Answer" }} />
-//     <Stack.Screen name="PreviousQAHome" component={PreviousQAHome} options={{ title: "Previous Q & A" }} />
-//     <Stack.Screen name="Previous" component={Previous} options={{ title: "Previous" }} />
-//     <Stack.Screen name="ScoreBoardQAHome" component={ScoreBoardQAHome} options={{ title: "Scoreboard Q & A" }} />
-//     <Stack.Screen name="ScoreBoard" component={ScoreBoard} options={{ title: "Scoreboard" }} /> */}
-//   </Stack.Navigator>
+    {/* <Stack.Screen name="InformationSrc" component={Info} options={{ headerShown: false }} /> */}
+    <Stack.Screen name="DonationSrc" component={Donation} options={{ headerShown: false }} />
+    <Stack.Screen name="AddDonation" component={AddDonation} options={{ title: "Donation Methods" }} />
+    <Stack.Screen name="RecurringDonation" component={RecurringDonation} options={{ title: "Recurring Donations" }} />
+    <Stack.Screen name="OneTimeDonation" component={OneTimeDonation} options={{ title: "One Time Donations" }} />
+    <Stack.Screen name="AddDetails" component={AddDetails} options={{ title: "Enter the Details" }} />
+    
+  </Stack.Navigator>
 )
 
 export default function App() {
@@ -327,25 +330,26 @@ export default function App() {
                   return { headerShown: false };
               }}
             />
- <Drawer.Screen
+
+            <Drawer.Screen
               name="Donation"
-              component={Donation}
+              component={DonationScreens}
               options={({ route }) => {
-                // console.log("test", getFocusedRouteNameFromRoute(route));
+                // console.log(getFocusedRouteNameFromRoute(route))
                 const routeName =
-                  getFocusedRouteNameFromRoute(route) ?? "Donation";
+                  getFocusedRouteNameFromRoute(route) ?? "DonationSrc";
+
                 if (typeof routeName == "undefined") return;
                 if (
-                  routeName == "AddDonationMethod" 
-                  // routeName == "AllEvents" ||
-                  // routeName == "YourEvents" ||
-                  // routeName == "InterestedEvents" ||
-                  // routeName == "ViewEvent" ||
-                  // routeName == "ViewEventUser" ||
-                  // routeName == "EditEvent" ||
-                  // routeName == "EventInfo"
+                  routeName == "AddDonation" ||
+                  routeName == "RecurringDonation" ||
+                  routeName == "OneTimeDonation" ||
+                  routeName == "AddDetails" 
+
+
                 )
                   return { headerShown: false };
+                return { title: "Donation Page" }
               }}
             />
 

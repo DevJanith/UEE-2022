@@ -2,11 +2,9 @@ import React, { useRef } from 'react'
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Button, TouchableOpacity } from 'react-native'
 import FocusedStatusBar from '../components/FocusedStatusBar'
 import { assets, COLORS, FONTS, SIZES } from '../constants'
-import RBSheet from "react-native-raw-bottom-sheet";
+
 
 const Donation = ({ navigation }) => {
-  const refRBSheet = useRef();
-
   return (
     <SafeAreaView
       style={{
@@ -60,13 +58,13 @@ const Donation = ({ navigation }) => {
 
               </View>
               <TouchableOpacity
+              onPress={()=>{navigation.push('AddDonation')}}
                 style={styles.submitButton}
-                onPress={() => {
-                  navigation.navigate("AddDonationMethod");
-                }}
+               
               >
                 <Text style={styles.btnText}>Donation Methods</Text>
               </TouchableOpacity>
+              
             </View>
             <View style={{
               margin: SIZES.extraLarge
@@ -85,7 +83,7 @@ const Donation = ({ navigation }) => {
                     justifyContent: "center",
                     width: "100%"
                   }}
-                  onPress={() => refRBSheet.current.open()}
+                  
                 >
 
 
@@ -230,39 +228,12 @@ const Donation = ({ navigation }) => {
               }}
             />
           </View>
-          <RBSheet
-            ref={refRBSheet}
-            closeOnDragDown={true}
-            closeOnPressMask={false}
-            customStyles={{
-              wrapper: {
-                backgroundColor: "transparent"
-              },
-              draggableIcon: {
-                backgroundColor: "#000"
-              },
-              container: {
-                backgroundColor: COLORS.lightCustomColor,
-                borderTopLeftRadius: 40,
-                borderTopRightRadius: 40,
-              }
-            }}
-          >
-            <View style={{
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "center"
-            }}>
-              <Text>Quick Q & A is a Simple Question Answers to test you’re knowledge regarding life below water</Text>
-            </View>
-          </RBSheet>
+          
         </View>
       </ScrollView>
     </SafeAreaView >
   )
 }
-
-export default Donation
 
 
 const styles = StyleSheet.create({
@@ -310,3 +281,5 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
 });
+
+export default Donation;
