@@ -54,7 +54,7 @@ const ViewEach_Info = ({ route, navigation }) => {
         if (response.status == 200) {
           setVisible(true);
           setSnackbarMessage("Details Deleted!");
-          navigation.navigate("AddInfoViewAll", { reloadVal: Math.random() });
+          navigation.push('AddInfoHome');
         } else {
           setVisible(true);
           setSnackbarMessage("Failed to delete Details.");

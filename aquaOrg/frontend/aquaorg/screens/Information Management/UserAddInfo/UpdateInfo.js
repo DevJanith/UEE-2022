@@ -115,7 +115,9 @@ const onChangeExplain = (value) => {
           if (response.status == 200) {
             setVisible(true);
             setSnackbarMessage("Details Updated Succsesfully!");
-            navigation.navigate("AddInfoViewAll", { reloadVal: Math.random() });
+            navigation.navigate("AddInfoHome", { reloadVal: Math.random() });
+            // navigation.navigate("AddInfoHome");
+            
           } else {
             setVisible(true);
             setSnackbarMessage("Failed to Update Details.");

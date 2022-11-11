@@ -166,7 +166,7 @@ const InformationScreens = () => (
     <Stack.Screen name="AddInfoCreate" component={AddInfoCreate} options={{ headerShown: false }} />
     <Stack.Screen name="AddInfoViewAll" component={AddInfoViewAll} options={{ title: "Added Information" }} />
     <Stack.Screen name="AddInfoViewEach" component={AddInfoViewEach} options={{ title: "Added Each Information" }} />
-    <Stack.Screen name="AddInfoUpdate" component={AddInfoUpdate} options={{ title: "Update Information" }} />
+    <Stack.Screen name="AddInfoUpdate" component={AddInfoUpdate} options={{ headerShown: false }} />
 
 
   </Stack.Navigator>
