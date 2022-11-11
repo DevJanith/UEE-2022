@@ -36,19 +36,10 @@ import ViewEvent from "./screens/events/ViewEvent";
 import ViewEventUser from "./screens/events/ViewEventUser";
 import EditEvent from "./screens/events/EditEvent";
 import EventInfo from "./screens/events/EventInfo";
-import {
-  QuickAnswer,
-  QuickQAHome,
-  QuickQuestion,
-} from "./screens/questionAndAnswers/quickQA";
-import {
-  Previous,
-  PreviousQAHome,
-} from "./screens/questionAndAnswers/previousQA";
-import {
-  ScoreBoard,
-  ScoreBoardQAHome,
-} from "./screens/questionAndAnswers/scoreBoardQA";
+
+import { QuickAnswer, QuickQAEnd, QuickQAHome, QuickQuestion } from "./screens/questionAndAnswers/quickQA";
+import { Previous, PreviousQAHome } from "./screens/questionAndAnswers/previousQA";
+import { ScoreBoard, ScoreBoardQAHome } from "./screens/questionAndAnswers/scoreBoardQA";
 import { login } from "./api";
 
 import InfoHome from "./screens/Information Management/Home";
@@ -62,6 +53,10 @@ import BlueWhaleExplore from "./screens/Information Management/BlueWhale/Explore
 
 import AddInfoHome from "./screens/Information Management/UserAddInfo/WantAddInfo";
 import AddInfoCreate from "./screens/Information Management/UserAddInfo/AddInfo_SeaAnimal";
+import AddInfoViewAll from "./screens/Information Management/UserAddInfo/ViewAll_Info";
+import AddInfoViewEach from "./screens/Information Management/UserAddInfo/ViewEach_Info";
+import AddInfoUpdate from "./screens/Information Management/UserAddInfo/UpdateInfo";
+import LogOut from "./screens/auth/LogOut";
 
 
 import AddDonation from "./screens/DonationManagement/AddDonation";
@@ -146,11 +141,12 @@ const EventScreens = () => (
   </StackEvent.Navigator>
 );
 
-const QuestionAnswerScreens = ({ loginSuccessData }) => (
+const QuestionAnswerScreens = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="QuestionAndAnswersSrc">
     <Stack.Screen name="QuestionAndAnswersSrc" component={QuestionAndAnswers} options={{ headerShown: false }} />
     <Stack.Screen name="QuickQAHome" component={QuickQAHome} options={{ title: "Quick Q & A" }} />
     <Stack.Screen name="QuickQuestion" component={QuickQuestion} options={{ title: "Quick Question" }} />
+    <Stack.Screen name="QuickQAEnd" component={QuickQAEnd} options={{ title: "Quick Q & A End" }} />
     <Stack.Screen name="QuickAnswer" component={QuickAnswer} options={{ title: "Quick Answer" }} />
     <Stack.Screen name="PreviousQAHome" component={PreviousQAHome} options={{ title: "Previous Q & A" }} />
     <Stack.Screen name="Previous" component={Previous} options={{ title: "Previous" }} />
@@ -174,6 +170,9 @@ const InformationScreens = () => (
     {/* Add Information */}
     <Stack.Screen name="AddInfoHome" component={AddInfoHome} options={{ headerShown: false }} />
     <Stack.Screen name="AddInfoCreate" component={AddInfoCreate} options={{ headerShown: false }} />
+    <Stack.Screen name="AddInfoViewAll" component={AddInfoViewAll} options={{ title: "Added Information" }} />
+    <Stack.Screen name="AddInfoViewEach" component={AddInfoViewEach} options={{ title: "Added Each Information" }} />
+    <Stack.Screen name="AddInfoUpdate" component={AddInfoUpdate} options={{ title: "Update Information" }} />
 
 
   </Stack.Navigator>
@@ -187,7 +186,7 @@ const DonationScreens = () => (
     <Stack.Screen name="RecurringDonation" component={RecurringDonation} options={{ title: "Recurring Donations" }} />
     <Stack.Screen name="OneTimeDonation" component={OneTimeDonation} options={{ title: "One Time Donations" }} />
     <Stack.Screen name="AddDetails" component={AddDetails} options={{ title: "Enter the Details" }} />
-    
+
   </Stack.Navigator>
 )
 
@@ -280,7 +279,10 @@ export default function App() {
                   routeName == "BlueWhaleHologram" ||
                   routeName == "BlueWhaleExplore" ||
                   routeName == "AddInfoHome" ||
-                  routeName == "AddInfoCreate"
+                  routeName == "AddInfoCreate" ||
+                  routeName == "AddInfoViewAll" ||
+                  routeName == "AddInfoViewEach" ||
+                  routeName == "AddInfoUpdate"
                 )
                   return { headerShown: false }
 
@@ -303,7 +305,8 @@ export default function App() {
                   routeName == "QuickQuestion" ||
                   routeName == "QuickAnswer" ||
                   routeName == "Previous" ||
-                  routeName == "ScoreBoard"
+                  routeName == "ScoreBoard" ||
+                  routeName == "QuickQAEnd"
                 )
                   return { headerShown: false };
                 return { title: "Question &  Answers" };
@@ -344,7 +347,7 @@ export default function App() {
                   routeName == "AddDonation" ||
                   routeName == "RecurringDonation" ||
                   routeName == "OneTimeDonation" ||
-                  routeName == "AddDetails" 
+                  routeName == "AddDetails"
 
 
                 )
@@ -354,6 +357,9 @@ export default function App() {
             />
 
             {/* <Drawer.Screen name="Donation" component={Donation} /> */}
+            <Drawer.Screen name="Donation" component={Donation} />
+            <Drawer.Screen name="Profile" component={Profile} options={{ title: "User Profile" }} />
+            <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "Log Out" }} />
           </Drawer.Navigator>
         ) : (
           <Stack.Navigator
