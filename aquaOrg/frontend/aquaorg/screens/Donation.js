@@ -57,14 +57,16 @@ const Donation = ({ navigation }) => {
                   style={{ flex: 1, color: COLORS.white }}
                   onChangeText={() => { }}
                 />
-                
+
               </View>
               <TouchableOpacity
-          style={styles.submitButton}
-          onPress={() => AddDonationMethod(item)}
-        >
-          <Text style={styles.btnText}>Donation Methods</Text>
-        </TouchableOpacity>
+                style={styles.submitButton}
+                onPress={() => {
+                  navigation.navigate("AddDonationMethod");
+                }}
+              >
+                <Text style={styles.btnText}>Donation Methods</Text>
+              </TouchableOpacity>
             </View>
             <View style={{
               margin: SIZES.extraLarge
@@ -72,7 +74,7 @@ const Donation = ({ navigation }) => {
               <View style={{
                 // margin: SIZES.extraLarge 
               }}>
-                
+
                 <TouchableOpacity
                   style={{
                     backgroundColor: COLORS.darkCustomColor,
@@ -85,9 +87,9 @@ const Donation = ({ navigation }) => {
                   }}
                   onPress={() => refRBSheet.current.open()}
                 >
-                   
-                    
-                    
+
+
+
                   {/* <View style={{ flexDirection: "row" }}>
                     <View style={{ flex: 8 }}>
                       <Text style={{
@@ -109,7 +111,7 @@ const Donation = ({ navigation }) => {
                     </View>
                   </View> */}
                 </TouchableOpacity>
-                
+
               </View>
               <View style={{
                 flexDirection: "row",

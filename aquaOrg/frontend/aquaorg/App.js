@@ -327,7 +327,29 @@ export default function App() {
                   return { headerShown: false };
               }}
             />
-            <Drawer.Screen name="Donation" component={Donation} />
+ <Drawer.Screen
+              name="Donation"
+              component={Donation}
+              options={({ route }) => {
+                // console.log("test", getFocusedRouteNameFromRoute(route));
+                const routeName =
+                  getFocusedRouteNameFromRoute(route) ?? "Donation";
+                if (typeof routeName == "undefined") return;
+                if (
+                  routeName == "AddDonationMethod" 
+                  // routeName == "AllEvents" ||
+                  // routeName == "YourEvents" ||
+                  // routeName == "InterestedEvents" ||
+                  // routeName == "ViewEvent" ||
+                  // routeName == "ViewEventUser" ||
+                  // routeName == "EditEvent" ||
+                  // routeName == "EventInfo"
+                )
+                  return { headerShown: false };
+              }}
+            />
+
+            {/* <Drawer.Screen name="Donation" component={Donation} /> */}
           </Drawer.Navigator>
         ) : (
           <Stack.Navigator
