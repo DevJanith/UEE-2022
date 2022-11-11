@@ -1834,11 +1834,6 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/lodash@^4.14.175":
-  "integrity" "sha512-zmEmF5OIM3rb7SbLCFYoQhO4dGt2FRM9AMkxvA3LaADOF1n8in/zGJlWji9fmafLoNyz+FoL6FE0SLtGIArD7w=="
-  "resolved" "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.188.tgz"
-  "version" "4.14.188"
-
 "@types/node@*":
   version "18.11.6"
   resolved "https://registry.npmjs.org/@types/node/-/node-18.11.6.tgz"

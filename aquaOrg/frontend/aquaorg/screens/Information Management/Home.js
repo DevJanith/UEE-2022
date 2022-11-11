@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Image, ImageBackground, SafeAreaView, ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import FocusedStatusBar from '../../components/FocusedStatusBar'
 import { COLORS, FONTS, SIZES } from '../../constants'
 import SeaAnimalList from './SeaAnimalList'
+import { AuthContext } from '../../context/context';
 
 const Home = ({ onSearch, navigation }) => {
+
+    const { userDetails } = useContext(AuthContext)
+    const [user, setuser] = useState()
+  
+    useEffect(() => {
+      console.log("Info +=====================>", userDetails)
+      setuser(userDetails)
+    }, [])
+
     return (
         <SafeAreaView
             style={{
@@ -19,29 +29,50 @@ const Home = ({ onSearch, navigation }) => {
                         background={COLORS.primary}
                     />
                     <ScrollView>
-                    <View
-                        style={{
-                            width: "100%",
-                            alignItems: "flex-end",
-                            paddingHorizontal: 20
-                        }}>
 
+                    <View style={{ flexDirection: "row" }}>
+
+                    <View style={{ flex: 2 }}>
+                        <Text style={{
+                            color: "#FFFF00",
+                            fontFamily: FONTS.semiBold,
+                            fontSize: 15,
+                            paddingHorizontal: 20,
+                            marginTop: 30,
+                            marginBottom: 10
+                        }}>Hi 😊 {typeof user != "undefined" && user.name}! </Text>
+                    </View>
+
+                    <View style={{ flex: 1 }}>
+                        
                         <View
                             style={{
-                                paddingHorizontal: 10,
-                                paddingVertical: 12,
-                                borderRadius: 10,
-                                marginTop: 30,
-                                backgroundColor: 'rgba(52, 52, 52, 0.6)',
-                                elevation:6
+                                width: "100%",
+                                alignItems: "flex-end",
+                                paddingHorizontal: 20
                             }}>
 
-                            <Image
-                                source={require('../../assets/images/Info/home_menu.png')}
-                                style={{ width: 20, height: 15 }}
-                            />
+                            <View
+                                style={{
+                                    paddingHorizontal: 10,
+                                    paddingVertical: 12,
+                                    borderRadius: 10,
+                                    marginTop: 30,
+                                    backgroundColor: 'rgba(52, 52, 52, 0.6)',
+                                    elevation:6
+                                }}>
+
+                                <Image
+                                    source={require('../../assets/images/Info/home_menu.png')}
+                                    style={{ width: 20, height: 15 }}
+                                />
+                            </View>
                         </View>
                     </View>
+
+                    </View>
+
+                    
                     <Text
                         style={{
                             paddingHorizontal: 20,

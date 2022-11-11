@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import RBSheet from "react-native-raw-bottom-sheet";
 import FocusedStatusBar from '../components/FocusedStatusBar';
@@ -7,10 +7,11 @@ import { AuthContext } from '../context/context';
 
 const QuestionAndAnswers = ({ navigation }) => {
   const { userDetails } = useContext(AuthContext)
-
+  const [user, setuser] = useState()
 
   useEffect(() => {
     console.log("Q&A +=====================", userDetails)
+    setuser(userDetails)
   }, [])
 
 
@@ -34,7 +35,7 @@ const QuestionAndAnswers = ({ navigation }) => {
               marginBottom: SIZES.large,
               textAlign: "center"
             }}>
-              Question & Answers
+              Question & Answers - {typeof user != "undefined" && user.name}
             </Text>
             <View style={{
               marginTop: SIZES.font,
