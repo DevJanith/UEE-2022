@@ -175,7 +175,7 @@ export default function App() {
   });
 
   const [isLoading, setIsLoading] = useState(true);
-  const [userAuth, setUserAuth] = useState(null);
+  const [userAuth, setUserAuth] = useState("12");
   const [loginSuccessData, setLoginSuccessData] = useState();
   const [loginErrorData, setLoginErrorData] = useState();
   const [loginIsSuccess, setLoginIsSuccess] = useState(false);
