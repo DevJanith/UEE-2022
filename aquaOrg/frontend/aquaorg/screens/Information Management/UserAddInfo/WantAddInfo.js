@@ -221,6 +221,44 @@ const WantAddInfo = ({ navigation }) => {
                 />
             </TouchableOpacity> 
 
+              {/* View All added Details by User */}
+
+                            <TouchableOpacity
+                                // onPress={() => { navigation.push('InfoCategories') }}
+                                onPress={() => { navigation.push('AddInfoViewAll') }}
+                                style={{
+                                    flexDirection: "row",
+                                    backgroundColor: "#015C92",
+                                    alignItems: "center",
+                                    marginTop: 30,
+                                    width: 150,
+                                    height:50,
+                                    paddingVertical: 10,
+                                    borderRadius: 50,
+                                    paddingHorizontal: 10,
+                                    marginLeft: 310
+                                }}
+                            >
+                                <Image
+                                    source={require('../../../assets/images/Info/play.png')}
+                                    style={{
+                                        marginLeft: 15,
+                                        marginRight: 15,
+                                        width: 15,
+                                        height: 15,
+                                        tintColor: "#FFF"
+                                    }}
+                                />
+                                <Text
+                                    style={{
+                                        color: "#FFF",
+                                        fontFamily: FONTS.bold,
+                                        fontSize: 12
+                                    }}>
+                                    VIEW ALL
+                                </Text>
+                            </TouchableOpacity>
+
         </View>
 
       </Modalize>

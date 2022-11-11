@@ -157,7 +157,7 @@ const Home = ({ onSearch, navigation }) => {
                             >Life Below Water!</Text>
 
                             <TouchableOpacity
-                                onPress={() => { navigation.push('InfoCategories') }}
+                                onPress={() => { navigation.push('InfoCategories') }} 
                                 style={{
                                     flexDirection: "row",
                                     backgroundColor: "#015C92",

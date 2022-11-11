@@ -62,6 +62,9 @@ import BlueWhaleExplore from "./screens/Information Management/BlueWhale/Explore
 
 import AddInfoHome from "./screens/Information Management/UserAddInfo/WantAddInfo";
 import AddInfoCreate from "./screens/Information Management/UserAddInfo/AddInfo_SeaAnimal";
+import AddInfoViewAll from "./screens/Information Management/UserAddInfo/ViewAll_Info";
+import AddInfoViewEach from "./screens/Information Management/UserAddInfo/ViewEach_Info";
+import AddInfoUpdate from "./screens/Information Management/UserAddInfo/UpdateInfo";
 
 
 //internal styling
@@ -168,6 +171,9 @@ const InformationScreens = () => (
     {/* Add Information */}
     <Stack.Screen name="AddInfoHome" component={AddInfoHome} options={{ headerShown: false }} />
     <Stack.Screen name="AddInfoCreate" component={AddInfoCreate} options={{ headerShown: false }} />
+    <Stack.Screen name="AddInfoViewAll" component={AddInfoViewAll} options={{ title: "Added Information" }} />
+    <Stack.Screen name="AddInfoViewEach" component={AddInfoViewEach} options={{ title: "Added Each Information" }} />
+    <Stack.Screen name="AddInfoUpdate" component={AddInfoUpdate} options={{ title: "Update Information" }} />
 
 
   </Stack.Navigator>
@@ -262,7 +268,10 @@ export default function App() {
                   routeName == "BlueWhaleHologram" ||
                   routeName == "BlueWhaleExplore" ||
                   routeName == "AddInfoHome" ||
-                  routeName == "AddInfoCreate"
+                  routeName == "AddInfoCreate" ||
+                  routeName == "AddInfoViewAll" ||
+                  routeName == "AddInfoViewEach" ||
+                  routeName == "AddInfoUpdate"
                 )
                   return { headerShown: false }
 
