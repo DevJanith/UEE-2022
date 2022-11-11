@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
 const SeaAnimalSchema = mongoose.Schema({
+  
+  email: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     require: true,
