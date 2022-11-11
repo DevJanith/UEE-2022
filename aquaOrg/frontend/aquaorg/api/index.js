@@ -23,4 +23,12 @@ export const getAllMarks = () => aquaOrgAPI.get(`marks/`)
 export const getMarksAccordingToUserId = (userId) => aquaOrgAPI.get(`marks/${userId}`)
 export const deleteMarks = (id) => aquaOrgAPI.delete(`marks/${id}`)
 
+export const createSeaAnimal = (data) => aquaOrgAPI.post(`sea-animal/`, data)
+export const getAllSeaAnimals = () => aquaOrgAPI.get(`sea-animal/`)
+export const getSeaAnimal = (id) => aquaOrgAPI.get(`sea-animal/${id}`)
+export const deleteSeaAnimal = (id) => aquaOrgAPI.delete(`sea-animal/${id}`)
+export const updateSeaAnimal = (id) => aquaOrgAPI.put(`sea-animal/${id}`)
+export const getSeaAnimalbyEmail = (email) => aquaOrgAPI.get(`sea-animal/${email}`)
+
+
 export default aquaOrgAPI;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
   Image,
   ImageBackground,
@@ -7,14 +7,26 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
+  Alert
 } from 'react-native'
+
+import { AuthContext } from '../../../context/context';
 import { Modalize } from 'react-native-modalize'
 import FocusedStatusBar from '../../../components/FocusedStatusBar'
 import { COLORS, FONTS, SIZES } from '../../../constants'
 import SeaAnimalList from '../SeaAnimalList'
 
 const WantAddInfo = ({ navigation }) => {
+
+  const { userDetails } = useContext(AuthContext)
+  const [user, setuser] = useState()
+
+  useEffect(() => {
+    console.log("Add_Info +=====================>", userDetails)
+    setuser(userDetails)
+  }, [])
+
   return (
 
     <ImageBackground
@@ -32,6 +44,7 @@ const WantAddInfo = ({ navigation }) => {
       }}>
         <TouchableOpacity
           onPress={() => { navigation.push('InformationSrc') }}
+          // handlePress={() => { navigation.goBack() }}
           style={{
             paddingHorizontal: 10,
             paddingVertical: 13,
@@ -72,6 +85,19 @@ const WantAddInfo = ({ navigation }) => {
       </Text>
 
 
+      <Text style={{
+        color: "#000000",
+        fontSize: 20,
+        fontFamily: FONTS.medium,
+        width: 500,
+        marginLeft: 30,
+        textAlign: "left",
+        marginTop: 70,
+        elevation: 10,
+
+      }}>📍 Categories</Text>
+
+
 
       <Modalize
         handleStyle={{
@@ -91,22 +117,147 @@ const WantAddInfo = ({ navigation }) => {
           marginTop: 40,
           marginBottom: 10
         }}>
-          <SeaAnimalList
-            onPress={() => { navigation.push('AddInfoCreate') }}
-            img={require('../../../assets/images/Info/blue_whale.png')}
-            title="Blue Whale"
-            bg="#C8E7F9"
-            icon={require('../../../assets/images/Info/right_arrow_2.png')}
+          {/* ------------------------------- sea animals -----------------------------------------------------*/}
 
-          />
+            <TouchableOpacity
+                onPress={() => { navigation.push('AddInfoCreate') }}
+                style={{
+                    flexDirection: "row",
+                    backgroundColor: "#BCE6FF",
+                    padding: 20,
+                    marginHorizontal: 20,
+                    borderRadius: 20,
+                    alignItems: "center",
+                    marginTop: 10,
+                    elevation:6
+                }}
+            >
+                <Image
+                    source={require('../../../assets/images/Info/sea_animal.png')}
+                    style={{ width: 60, height: 60 }}
+                />
 
-          <SeaAnimalList
+                <View>
+                    <Text
+                        style={{
+                            color: "#000000",
+                            fontFamily: FONTS.bold,
+                            fontSize: 20,
+                            paddingHorizontal: 20,
+                            width: 170
+                        }}
+                    >Sea Animals</Text>
+                    <Text
+                        style={{
+                            color:"#f58084",
+                            fontFamily:FONTS.medium,
+                            fontSize:12,
+                            paddingHorizontal:20
+                        }}
+                    >Click to add more informations</Text>
+                </View>
+              
+                <Image
+                    source={require('../../../assets/images/Info/right_arrow_3.png')}
+                    style={{ 
+                        width: 35, 
+                        height: 35,
+                        marginLeft:40
+                    }}
+                />
+            </TouchableOpacity> 
 
-            img={require('../../../assets/images/Info/seahorse.png')}
-            title="Sea Horse"
-            bg="#C8E7F9"
-            icon={require('../../../assets/images/Info/right_arrow_2.png')}
-          />
+{/* ------------------------------- sea plants -----------------------------------------------------*/}
+
+            <TouchableOpacity
+                onPress={() => { 
+                  navigation.push('AddInfoCreate')
+                  // alert('Hello'+ {typeof :user != "undefined" && user.name} + 'Wanna continue?') 
+
+                }}
+                style={{
+                    flexDirection: "row",
+                    backgroundColor: "#BCE6FF",
+                    padding: 20,
+                    marginHorizontal: 20,
+                    borderRadius: 20,
+                    alignItems: "center",
+                    marginTop: 20,
+                    elevation:6
+                }}
+            >
+                <Image
+                    source={require('../../../assets/images/Info/sea_plant.png')}
+                    style={{ width: 60, height: 60 }}
+                />
+
+                <View>
+                    <Text
+                        style={{
+                            color: "#000000",
+                            fontFamily: FONTS.bold,
+                            fontSize: 20,
+                            paddingHorizontal: 20,
+                            width: 170
+                        }}
+                    >Sea Plants</Text>
+                    <Text
+                        style={{
+                            color:"#f58084",
+                            fontFamily:FONTS.medium,
+                            fontSize:12,
+                            paddingHorizontal:20
+                        }}
+                    >Click to add more informations</Text>
+                </View>
+              
+                <Image
+                    source={require('../../../assets/images/Info/right_arrow_3.png')}
+                    style={{ 
+                        width: 35, 
+                        height: 35,
+                        marginLeft:40
+                    }}
+                />
+            </TouchableOpacity> 
+
+              {/* View All added Details by User */}
+
+                            <TouchableOpacity
+                                // onPress={() => { navigation.push('InfoCategories') }}
+                                onPress={() => { navigation.push('AddInfoViewAll') }}
+                                style={{
+                                    flexDirection: "row",
+                                    backgroundColor: "#015C92",
+                                    alignItems: "center",
+                                    marginTop: 30,
+                                    width: 150,
+                                    height:50,
+                                    paddingVertical: 10,
+                                    borderRadius: 50,
+                                    paddingHorizontal: 10,
+                                    marginLeft: 310
+                                }}
+                            >
+                                <Image
+                                    source={require('../../../assets/images/Info/play.png')}
+                                    style={{
+                                        marginLeft: 15,
+                                        marginRight: 15,
+                                        width: 15,
+                                        height: 15,
+                                        tintColor: "#FFF"
+                                    }}
+                                />
+                                <Text
+                                    style={{
+                                        color: "#FFF",
+                                        fontFamily: FONTS.bold,
+                                        fontSize: 12
+                                    }}>
+                                    VIEW ALL
+                                </Text>
+                            </TouchableOpacity>
 
         </View>
 

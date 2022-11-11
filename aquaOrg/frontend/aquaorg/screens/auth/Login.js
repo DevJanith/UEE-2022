@@ -199,7 +199,7 @@ const Login = ({ navigation }) => {
                                         width: '50%'
 
                                     }}
-                                    onPress={() => { onFormSubmit() }}
+                                    onPress={() => { login(formData) }}
                                 >
                                     <Text style={{
                                         fontFamily: FONTS.bold,
