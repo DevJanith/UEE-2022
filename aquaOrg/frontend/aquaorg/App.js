@@ -37,7 +37,7 @@ import ViewEventUser from "./screens/events/ViewEventUser";
 import EditEvent from "./screens/events/EditEvent";
 import EventInfo from "./screens/events/EventInfo";
 
-import { QuickAnswer, QuickQAHome, QuickQuestion } from "./screens/questionAndAnswers/quickQA";
+import { QuickAnswer, QuickQAEnd, QuickQAHome, QuickQuestion } from "./screens/questionAndAnswers/quickQA";
 import { Previous, PreviousQAHome } from "./screens/questionAndAnswers/previousQA";
 import { ScoreBoard, ScoreBoardQAHome } from "./screens/questionAndAnswers/scoreBoardQA";
 import { login } from "./api";
@@ -137,6 +137,7 @@ const QuestionAnswerScreens = () => (
     <Stack.Screen name="QuestionAndAnswersSrc" component={QuestionAndAnswers} options={{ headerShown: false }} />
     <Stack.Screen name="QuickQAHome" component={QuickQAHome} options={{ title: "Quick Q & A" }} />
     <Stack.Screen name="QuickQuestion" component={QuickQuestion} options={{ title: "Quick Question" }} />
+    <Stack.Screen name="QuickQAEnd" component={QuickQAEnd} options={{ title: "Quick Q & A End" }} />
     <Stack.Screen name="QuickAnswer" component={QuickAnswer} options={{ title: "Quick Answer" }} />
     <Stack.Screen name="PreviousQAHome" component={PreviousQAHome} options={{ title: "Previous Q & A" }} />
     <Stack.Screen name="Previous" component={Previous} options={{ title: "Previous" }} />
@@ -175,7 +176,7 @@ export default function App() {
   });
 
   const [isLoading, setIsLoading] = useState(true);
-  const [userAuth, setUserAuth] = useState("12");
+  const [userAuth, setUserAuth] = useState(null);
   const [loginSuccessData, setLoginSuccessData] = useState();
   const [loginErrorData, setLoginErrorData] = useState();
   const [loginIsSuccess, setLoginIsSuccess] = useState(false);
@@ -277,7 +278,8 @@ export default function App() {
                   routeName == "QuickQuestion" ||
                   routeName == "QuickAnswer" ||
                   routeName == "Previous" ||
-                  routeName == "ScoreBoard"
+                  routeName == "ScoreBoard" ||
+                  routeName == "QuickQAEnd"
                 )
                   return { headerShown: false };
                 return { title: "Question &  Answers" };
@@ -305,7 +307,7 @@ export default function App() {
               }}
             />
             <Drawer.Screen name="Donation" component={Donation} />
-            <Drawer.Screen name="Profile" component={Profile} options={{ title: "User Profile" }} />
+            <Drawer.Screen name="Profile" component={Profile} options={{ title: "User Profile" }} /> 
             <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "Log Out" }} />
           </Drawer.Navigator>
         ) : (

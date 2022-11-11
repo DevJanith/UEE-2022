@@ -108,7 +108,7 @@ const QuickQuestion = ({ navigation }) => {
 
   //qa handlers
   const NextQuestion = () => {
-    if (dummyData.length == qaNumber + 1) return alert(`end ${marks}`)
+    if (dummyData.length == qaNumber + 1) return navigation.push('QuickQAEnd', { marks: marks })
     setQaNumber((prev) => { return prev + 1 })
     setAnswer(null)
   }
