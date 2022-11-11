@@ -4,8 +4,9 @@ import { Snackbar } from 'react-native-paper'
 import { getUser, updateUser } from '../../../api'
 import { assets, COLORS, FONTS, SIZES } from '../../../constants'
 import { AuthContext } from '../../../context/context'
+import { contactNumberValidation } from '../../../util/validation'
 
-const EditProfile = ({ data }) => {
+const EditProfile = ({setUserUpdateFormState}) => {
     const { userDetails } = useContext(AuthContext)
 
     const [formData, setFormData] = useState({
@@ -68,6 +69,7 @@ const EditProfile = ({ data }) => {
                 setSuccessData(response.data.result)
                 setUserData(response.data.result)
                 setIsPending(false)
+                setUserUpdateFormState("end")
                 alert("update success")
             })
             .catch((err) => {

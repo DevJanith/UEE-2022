@@ -1,32 +1,71 @@
-import React, { useRef } from 'react'
-import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native'
+import React, { useContext, useEffect, useRef, useState } from 'react'
+import { Image, SafeAreaView, ScrollView, View } from 'react-native'
 import { Modalize } from 'react-native-modalize'
+import { getUser } from '../../api'
 import { FocusedStatusBar } from '../../components'
 import { assets, COLORS, SIZES } from '../../constants'
+import { AuthContext } from '../../context/context'
+import Splash from '../other/Splash'
 import EditProfile from './components/EditProfile'
 import ProfileBody from './components/ProfileBody'
 import ProfileHeader from './components/ProfileHeader'
 
 const Profile = () => {
+  const { userDetails } = useContext(AuthContext)
+
+  const [userId, setUserId] = useState(typeof userDetails != "undefined" && userDetails._id)
+  const [userData, setUserData] = useState()
+  const [userErrorData, setUserErrorData] = useState();
+  const [userIsSuccess, setUserIsSuccess] = useState(false);
+  const [userIsPending, setUserIsPending] = useState(false);
+  const [userIsError, setUserIsError] = useState(false);
+
+  const [userUpdateFormState, setUserUpdateFormState] = useState("initial")
+
+  const getUserDetails = (id) => {
+    setUserIsPending(true)
+
+    getUser(id)
+      .then((response) => {
+        console.log(response.data.result);
+        setUserData(response.data.result)
+        setUserIsPending(false)
+      })
+      .catch((err) => {
+        console.log(err)
+        setUserErrorData(err.response)
+        setUserIsPending(false)
+        alert("User details fetch fail")
+      })
+  }
+
+  useEffect(() => {
+    if (typeof userId == "undefined" || userId == null) return
+    getUserDetails(userId)
+    setUserUpdateFormState("initial")
+  }, [userId, userUpdateFormState])
+
   const modalizeRef = useRef(null);
 
   const onOpen = () => {
     modalizeRef.current?.open();
   };
 
+  if (userIsPending) {
+    return <Splash />;
+  }
+
+  if (typeof userData == "undefined" || userData == null) {
+    return <Splash />;
+  }
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={{ zIndex: 0 }}>
         <ScrollView>
           <FocusedStatusBar background={COLORS.primary} />
-          <ProfileHeader name={"Janith Gamage"} onOpen={onOpen} /> 
-          <ProfileBody data={
-            {
-              name: "janith Gamage",
-              email: "user@gmail.com",
-              contactNumber: "076852525"
-            }
-          } />
+          <ProfileHeader name={userData.name} onOpen={onOpen} />
+          <ProfileBody data={userData} />
         </ScrollView>
       </View>
       <View style={{
@@ -63,13 +102,7 @@ const Profile = () => {
         scrollViewProps={{ showsVerticalScrollIndicator: false }}
         ref={modalizeRef}
       >
-        <EditProfile data={
-            {
-              name: "janith Gamage",
-              email: "user@gmail.com",
-              contactNumber: "076852525"
-            }
-          }/>
+        <EditProfile setUserUpdateFormState={setUserUpdateFormState} />
       </Modalize>
     </SafeAreaView>
   )
