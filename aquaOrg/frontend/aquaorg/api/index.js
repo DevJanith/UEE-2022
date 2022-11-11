@@ -9,7 +9,7 @@ export const login = (data) => aquaOrgAPI.post(`users/login`, data);
 export const registration = (data) => aquaOrgAPI.post(`users/register`, data);
 export const resetPassword = (data) => aquaOrgAPI.put(`users/password-reset`, data);
 export const getUser = (id) => aquaOrgAPI.get(`users/${id}`);
-export const updateUser = (id) => aquaOrgAPI.put(`users/${id}`);
+export const updateUser = (id, data) => aquaOrgAPI.put(`users/${id}`, data);
 
 
 export const createQuestionAnswers = (data) => aquaOrgAPI.post(`question-answers/`, data)

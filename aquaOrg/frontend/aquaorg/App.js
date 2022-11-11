@@ -36,19 +36,10 @@ import ViewEvent from "./screens/events/ViewEvent";
 import ViewEventUser from "./screens/events/ViewEventUser";
 import EditEvent from "./screens/events/EditEvent";
 import EventInfo from "./screens/events/EventInfo";
-import {
-  QuickAnswer,
-  QuickQAHome,
-  QuickQuestion,
-} from "./screens/questionAndAnswers/quickQA";
-import {
-  Previous,
-  PreviousQAHome,
-} from "./screens/questionAndAnswers/previousQA";
-import {
-  ScoreBoard,
-  ScoreBoardQAHome,
-} from "./screens/questionAndAnswers/scoreBoardQA";
+
+import { QuickAnswer, QuickQAEnd, QuickQAHome, QuickQuestion } from "./screens/questionAndAnswers/quickQA";
+import { Previous, PreviousQAHome } from "./screens/questionAndAnswers/previousQA";
+import { ScoreBoard, ScoreBoardQAHome } from "./screens/questionAndAnswers/scoreBoardQA";
 import { login } from "./api";
 
 import InfoHome from "./screens/Information Management/Home";
@@ -62,6 +53,7 @@ import BlueWhaleExplore from "./screens/Information Management/BlueWhale/Explore
 
 import AddInfoHome from "./screens/Information Management/UserAddInfo/WantAddInfo";
 import AddInfoCreate from "./screens/Information Management/UserAddInfo/AddInfo_SeaAnimal";
+import LogOut from "./screens/auth/LogOut";
 
 
 //internal styling
@@ -140,11 +132,12 @@ const EventScreens = () => (
   </StackEvent.Navigator>
 );
 
-const QuestionAnswerScreens = ({ loginSuccessData }) => (
+const QuestionAnswerScreens = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="QuestionAndAnswersSrc">
     <Stack.Screen name="QuestionAndAnswersSrc" component={QuestionAndAnswers} options={{ headerShown: false }} />
     <Stack.Screen name="QuickQAHome" component={QuickQAHome} options={{ title: "Quick Q & A" }} />
     <Stack.Screen name="QuickQuestion" component={QuickQuestion} options={{ title: "Quick Question" }} />
+    <Stack.Screen name="QuickQAEnd" component={QuickQAEnd} options={{ title: "Quick Q & A End" }} />
     <Stack.Screen name="QuickAnswer" component={QuickAnswer} options={{ title: "Quick Answer" }} />
     <Stack.Screen name="PreviousQAHome" component={PreviousQAHome} options={{ title: "Previous Q & A" }} />
     <Stack.Screen name="Previous" component={Previous} options={{ title: "Previous" }} />
@@ -285,7 +278,8 @@ export default function App() {
                   routeName == "QuickQuestion" ||
                   routeName == "QuickAnswer" ||
                   routeName == "Previous" ||
-                  routeName == "ScoreBoard"
+                  routeName == "ScoreBoard" ||
+                  routeName == "QuickQAEnd"
                 )
                   return { headerShown: false };
                 return { title: "Question &  Answers" };
@@ -313,6 +307,8 @@ export default function App() {
               }}
             />
             <Drawer.Screen name="Donation" component={Donation} />
+            <Drawer.Screen name="Profile" component={Profile} options={{ title: "User Profile" }} /> 
+            <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "Log Out" }} />
           </Drawer.Navigator>
         ) : (
           <Stack.Navigator
