@@ -51,7 +51,7 @@ export const getQuestionAnswers = async (req, res, next) => {
 export const getQuestionAnswersAccordingToType = async (req, res, next) => {
     const { type } = req.params;
     try {
-        const questionAnswers = await QuestionAnswers.findOne({ qaCollectionType: type });
+        const questionAnswers = await QuestionAnswers.find({ qaCollectionType: type });
 
         res.status(200).json({ code: "01", result: questionAnswers })
     } catch (e) {
