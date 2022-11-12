@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
   },
 
   menuCard1: {
-    backgroundColor: "#53A7DB",
+    backgroundColor: "#0c78b9",
 
     margin: 10,
     width: 130,
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   menuCard2: {
-    backgroundColor: "#53A7DB",
+    backgroundColor: "#0c78b9",
 
     margin: 10,
     width: 130,
@@ -398,7 +398,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   menuCard3: {
-    backgroundColor: "#53A7DB",
+    backgroundColor: "#0c78b9",
 
     margin: 10,
     width: 130,
@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   menuCard4: {
-    backgroundColor: "#53A7DB",
+    backgroundColor: "#0c78b9",
     margin: 10,
     width: 130,
     height: 100,
