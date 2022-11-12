@@ -40,9 +40,9 @@ const FeatureWelcomePage = ({ FeatureWelcomePageData, navigation }) => {
                     paddingHorizontal: 25,
                     marginVertical: 5,
                 }}>
-                    {FeatureWelcomePageData.features.map((item) => {
+                    {FeatureWelcomePageData.features.map((item, index) => {
                         return <>
-                            <View style={{ flexDirection: "row", marginTop: SIZES.base, alignContent: "space-between" }} >
+                            <View style={{ flexDirection: "row", marginTop: SIZES.base, alignContent: "space-between" }} key={index} >
                                 <View styles={{ flex: 1 }}>
                                     <Text> 👋 </Text>
                                 </View>
