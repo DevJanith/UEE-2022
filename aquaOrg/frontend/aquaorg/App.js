@@ -40,7 +40,7 @@ import EventInfo from "./screens/events/EventInfo";
 import { QuickAnswer, QuickQAEnd, QuickQAHome, QuickQuestion } from "./screens/questionAndAnswers/quickQA";
 import { Previous, PreviousQAHome } from "./screens/questionAndAnswers/previousQA";
 import { ScoreBoard, ScoreBoardQAHome } from "./screens/questionAndAnswers/scoreBoardQA";
-import { login } from "./api";
+import { login, registration } from "./api";
 
 import InfoHome from "./screens/Information Management/Home";
 import InfoCategories from "./screens/Information Management/Categories";
@@ -57,6 +57,12 @@ import AddInfoViewAll from "./screens/Information Management/UserAddInfo/ViewAll
 import AddInfoViewEach from "./screens/Information Management/UserAddInfo/ViewEach_Info";
 import AddInfoUpdate from "./screens/Information Management/UserAddInfo/UpdateInfo";
 import LogOut from "./screens/auth/LogOut";
+
+
+import AddDonation from "./screens/DonationManagement/AddDonation";
+import RecurringDonation from "./screens/DonationManagement/RecurringDonation";
+import OneTimeDonation from "./screens/DonationManagement/OneTimeDonation";
+import AddDetails from "./screens/DonationManagement/AddDetails";
 
 
 //internal styling
@@ -172,6 +178,18 @@ const InformationScreens = () => (
   </Stack.Navigator>
 )
 
+const DonationScreens = () => (
+  <Stack.Navigator initialRouteName="DonationSrc">
+    {/* <Stack.Screen name="InformationSrc" component={Info} options={{ headerShown: false }} /> */}
+    <Stack.Screen name="DonationSrc" component={Donation} options={{ headerShown: false }} />
+    <Stack.Screen name="AddDonation" component={AddDonation} options={{ title: "Donation Methods" }} />
+    <Stack.Screen name="RecurringDonation" component={RecurringDonation} options={{ title: "Recurring Donations" }} />
+    <Stack.Screen name="OneTimeDonation" component={OneTimeDonation} options={{ title: "One Time Donations" }} />
+    <Stack.Screen name="AddDetails" component={AddDetails} options={{ title: "Enter the Details" }} />
+
+  </Stack.Navigator>
+)
+
 export default function App() {
   const [loaded] = useFonts({
     InterBold: require("./assets/fonts/Inter-Bold.ttf"),
@@ -188,6 +206,12 @@ export default function App() {
   const [loginIsSuccess, setLoginIsSuccess] = useState(false);
   const [loginsIsPending, setLoginIsPending] = useState(false);
   const [loginIsError, setLoginIsError] = useState(false);
+
+  const [registrationSuccessData, setRegistrationSuccessData] = useState();
+  const [registrationErrorData, setRegistrationErrorData] = useState();
+  const [registrationIsSuccess, setRegistrationIsSuccess] = useState(false);
+  const [registrationsIsPending, setRegistrationIsPending] = useState(false);
+  const [registrationIsError, setRegistrationIsError] = useState(false);
 
   const authContext = useMemo(() => {
     return {
@@ -213,9 +237,28 @@ export default function App() {
             alert("login Fail");
           });
       },
-      register: () => {
-        setIsLoading(false);
-        setUserAuth("1234");
+      register: (data) => {
+        console.log(data);
+        setIsLoading(true);
+        setRegistrationIsPending(true);
+        registration(data)
+          .then((response) => {
+            console.log(response.data.result);
+            setRegistrationSuccessData(response.data.result);
+            setUserAuth(response.data.token);
+            setIsLoading(false);
+            setRegistrationIsPending(false);
+            setRegistrationIsSuccess(true);
+            alert("Registration Success");
+          })
+          .catch((err) => {
+            console.log(err);
+            setRegistrationErrorData(err.response);
+            setIsLoading(false);
+            setRegistrationIsPending(false);
+            setRegistrationIsError(true);
+            alert("Registration Fail");
+          });
       },
       logout: () => {
         setIsLoading(false);
@@ -230,6 +273,10 @@ export default function App() {
       setIsLoading(false);
     }, 1000);
   }, []);
+
+  if (isLoading) {
+    return <Splash />;
+  }
 
   if (isLoading) {
     return <Splash />;
@@ -315,8 +362,31 @@ export default function App() {
                   return { headerShown: false };
               }}
             />
-            <Drawer.Screen name="Donation" component={Donation} />
-            <Drawer.Screen name="Profile" component={Profile} options={{ title: "User Profile" }} /> 
+            <Drawer.Screen
+              name="Donation"
+              component={DonationScreens}
+              options={({ route }) => {
+                // console.log(getFocusedRouteNameFromRoute(route))
+                const routeName =
+                  getFocusedRouteNameFromRoute(route) ?? "DonationSrc";
+
+                if (typeof routeName == "undefined") return;
+                if (
+                  routeName == "AddDonation" ||
+                  routeName == "RecurringDonation" ||
+                  routeName == "OneTimeDonation" ||
+                  routeName == "AddDetails"
+
+
+                )
+                  return { headerShown: false };
+                return { title: "Donation Page" }
+              }}
+            />
+
+            {/* <Drawer.Screen name="Donation" component={Donation} /> */}
+            {/* <Drawer.Screen name="Donation" component={Donation} /> */}
+            <Drawer.Screen name="Profile" component={Profile} options={{ title: "User Profile" }} />
             <Drawer.Screen name="LogOut" component={LogOut} options={{ title: "Log Out" }} />
           </Drawer.Navigator>
         ) : (
