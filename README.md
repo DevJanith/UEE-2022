@@ -14,7 +14,7 @@ Mobile Application
 
 ```
 
-## How to start Frontend (Node+Express+Mongo)
+## How to start Backend (Node+Express+Mongo)
 
 ```javascript
 
